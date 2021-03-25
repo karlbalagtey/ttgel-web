@@ -1,14 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { Provider } from 'react-redux';
+
+// Use consistent styling
+import 'sanitize.css/sanitize.css';
+
+import { App } from 'app';
+import { HelmetProvider } from 'react-helmet-async';
+import { configureAppStore } from 'store/configureStore';
+import { ThemeProvider } from 'styles/theme/ThemeProvider';
+
 import reportWebVitals from './reportWebVitals';
 
+const store = configureAppStore();
+const MOUNT_NODE = document.getElementById('root');
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <Provider store={store}>
+    <ThemeProvider>
+      <HelmetProvider>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </HelmetProvider>
+    </ThemeProvider>
+  </Provider>,
+  MOUNT_NODE,
 );
 
 // If you want to start measuring performance in your app, pass a function
