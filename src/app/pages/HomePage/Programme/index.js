@@ -1,44 +1,23 @@
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
-import { PageBackground, PageWrapper } from 'app/components/PageWrapper';
-import { P } from '../components/P';
+import { selectProgrammes } from './slice/selectors';
+import { useProgrammeSlice } from './slice';
 
 import styled from 'styled-components/macro';
+import { PageBackground, PageWrapper } from 'app/components/PageWrapper';
+import { P } from '../components/P';
 import { SubTitle } from '../components/SubTitle';
 import { Card } from 'app/components/Card';
 
 export function Programme() {
-  const courses = [
-    {
-      id: 1,
-      title: 'Course 1',
-      description: 'Description 1',
-      src: 'https://picsum.photos/320?random=1',
-      alt: 'Alt text 1',
-    },
-    {
-      id: 2,
-      title: 'Course 2',
-      description: 'Description 2',
-      src: 'https://picsum.photos/320?random=2',
-      alt: 'Alt text 2',
-    },
-    {
-      id: 3,
-      title: 'Course 3',
-      description: 'Description 3',
-      src: 'https://picsum.photos/320?random=3',
-      alt: 'Alt text 3',
-    },
-    {
-      id: 4,
-      title: 'Course 4',
-      description: 'Description 4',
-      src: 'https://picsum.photos/320?random=4',
-      alt: 'Alt text 4',
-    },
-  ];
+  const { actions } = useProgrammeSlice();
+  const dispatch = useDispatch();
+  const programmes = useSelector(selectProgrammes);
+
+  React.useEffect(() => {
+    dispatch(actions.fetchProgrammes());
+  }, [dispatch, actions]);
+
   return (
     <PageBackground padding={'5rem 0'}>
       <PageWrapper>
@@ -47,15 +26,35 @@ export function Programme() {
           Over the two year programme we cover six main topics, three in each
           year
         </P>
-        <List>
-          {courses.map(course => (
-            <Card key={course.id} props={course} />
+        <YearWrap>
+          {programmes.map(p => (
+            <Year>{p.title}</Year>
           ))}
+        </YearWrap>
+        <List>
+          {/* {courses.map(course => (
+            <Card key={course.id} props={course} />
+          ))} */}
         </List>
       </PageWrapper>
     </PageBackground>
   );
 }
+
+const YearWrap = styled.div`
+  display: flex;
+  margin-left: -1rem;
+`;
+
+const Year = styled.button`
+  display: flex;
+  padding: 1rem;
+  margin: 1rem;
+  cursor: pointer;
+  background: ${p => p.theme.background};
+  color: ${p => p.theme.primary};
+  font-weight: 600;
+`;
 
 const List = styled.section`
   display: grid;

@@ -1,7 +1,10 @@
 import axios from 'axios';
+import dotenv from 'dotenv';
 
-export const ttgelGetCourses = query => {
-  const URL = `${process.env.REACT_APP_API_URL}stores?${query}`;
+dotenv.config();
+
+export const getProgrammes = query => {
+  const URL = `${process.env.REACT_APP_API_URL}programmes`;
 
   return axios.get(URL, {});
 };

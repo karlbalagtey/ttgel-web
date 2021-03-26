@@ -4,4 +4,7 @@ import { initialState } from '.';
 
 const selectSlice = state => state.programme || initialState;
 
-export const selectProgramme = createSelector([selectSlice], state => state);
+export const selectProgrammes = createSelector(
+  [selectSlice],
+  state => state.programmes,
+);

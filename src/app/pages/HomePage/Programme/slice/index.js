@@ -4,18 +4,28 @@ import { programmeSaga } from './saga';
 
 // The initial state of the Homepage
 export const initialState = {
-  courses: [],
+  programmes: [],
+  loading: false,
+  error: null,
 };
 
 const slice = createSlice({
   name: 'programme',
   initialState,
   reducers: {
-    getCourses(state, action) {
-      state.courses = action.payload;
+    fetchProgrammes(state) {
+      state.loading = true;
+      state.error = null;
+      state.programmes = [];
     },
-    success(state, action) {
-      state.courses = action.payload;
+    loadedProgrammes(state, action) {
+      const programmes = action.payload;
+      state.programmes = programmes;
+      state.loading = false;
+    },
+    errorProgrammes(state, action) {
+      state.error = action.payload;
+      state.loading = false;
     },
   },
 });
@@ -23,7 +33,7 @@ const slice = createSlice({
 /**
  * `actions` will be used to trigger change in the state from where ever you want
  */
-export const { actions: programmeActions } = slice;
+export const { actions: programmeActions, reducer } = slice;
 
 /**
  * Let's turn this into a hook style usage.

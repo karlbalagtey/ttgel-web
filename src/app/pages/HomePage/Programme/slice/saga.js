@@ -1,18 +1,19 @@
 import { put, takeLatest } from 'redux-saga/effects';
-import { programmeActions as actions, programmeActions } from '.';
-import { ttgelGetCourses } from './api';
+import { programmeActions as actions } from '.';
+import { getProgrammes } from './api';
 
-function* getCourses() {
+function* fetchProgrammes() {
   try {
-    const data = yield ttgelGetCourses();
-    console.log(data);
-    yield put(programmeActions.success(data));
+    const { data } = yield getProgrammes();
+    const { results } = data;
+
+    yield put(actions.loadedProgrammes(results));
   } catch (error) {
     console.log(error);
-    yield put(programmeActions.error(error));
+    yield put(actions.errorProgrammes(error));
   }
 }
 
 export function* programmeSaga() {
-  yield takeLatest(actions.someAction.type, getCourses);
+  yield takeLatest(actions.fetchProgrammes.type, fetchProgrammes);
 }
