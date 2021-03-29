@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 // Use consistent styling
 import 'sanitize.css/sanitize.css';
@@ -12,7 +13,7 @@ import { ThemeProvider } from 'styles/theme/ThemeProvider';
 
 import reportWebVitals from './reportWebVitals';
 
-const store = configureAppStore();
+const { store, persistor } = configureAppStore();
 const MOUNT_NODE = document.getElementById('root');
 
 ReactDOM.render(
@@ -20,7 +21,9 @@ ReactDOM.render(
     <ThemeProvider>
       <HelmetProvider>
         <React.StrictMode>
-          <App />
+          <PersistGate persistor={persistor}>
+            <App />
+          </PersistGate>
         </React.StrictMode>
       </HelmetProvider>
     </ThemeProvider>

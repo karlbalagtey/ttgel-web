@@ -5,6 +5,8 @@ import { programmeSaga } from './saga';
 // The initial state of the Homepage
 export const initialState = {
   programmes: [],
+  id: '5c8a1d5b0190b214360dc032', // default featured programme
+  featured: [],
   loading: false,
   error: null,
 };
@@ -13,14 +15,27 @@ const slice = createSlice({
   name: 'programme',
   initialState,
   reducers: {
+    changeFeatured(state, action) {
+      state.id = action.payload;
+    },
     fetchProgrammes(state) {
       state.loading = true;
       state.error = null;
       state.programmes = [];
     },
+    fetchFeaturedProgramme(state) {
+      state.loading = true;
+      state.error = null;
+      state.featured = [];
+    },
     loadedProgrammes(state, action) {
       const programmes = action.payload;
       state.programmes = programmes;
+      state.loading = false;
+    },
+    loadedFeatured(state, action) {
+      const featured = action.payload;
+      state.featured = featured;
       state.loading = false;
     },
     errorProgrammes(state, action) {

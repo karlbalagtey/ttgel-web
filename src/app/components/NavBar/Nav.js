@@ -1,11 +1,14 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { ThemeSwitch } from './ThemeSwitch';
 import { Hamburger } from './Hamburger';
 import { StyleConstants } from 'styles/StyleConstants';
+import { selectClient } from 'app/pages/LoginPage/LoginForm/slice/selectors';
+import { UserAvatar } from './UserAvatar';
 
 export function Nav() {
+  const client = useSelector(selectClient);
   const [isOpen, setIsOpen] = React.useState(false);
   const handleMenu = () => {
     setIsOpen(!isOpen);
@@ -23,25 +26,30 @@ export function Nav() {
   return (
     <>
       <Menu className={isOpen && 'show'}>
-        <Item href="#course-overview" title="Course Overview">
-          Course Overview
-        </Item>
-        <Item href="#course-details" title="Course Details">
-          Course Details
-        </Item>
-        <Item href="#course-details" title="Course Details">
-          Contact
-        </Item>
-        <Item href="#course-details" title="Course Details">
-          Signup
-        </Item>
-        <Item href="#course-details" title="Course Details">
-          Login
-        </Item>
+        {client ? (
+          <>
+            <UserAvatar />
+          </>
+        ) : (
+          <>
+            <Item href="#course-overview" title="Course Overview">
+              Course Overview
+            </Item>
+            <Item href="#course-details" title="Course Details">
+              Course Details
+            </Item>
+            <Item href="/signup" title="Sign Up">
+              Signup
+            </Item>
+            <Item href="/login" title="Login">
+              Login
+            </Item>
+          </>
+        )}
       </Menu>
       <GroupButton>
         <Hamburger handleClick={handleMenu} />
-        <ThemeSwitch />
+        {/* <ThemeSwitch /> */}
       </GroupButton>
     </>
   );
@@ -75,6 +83,7 @@ const Menu = styled.nav`
   @media (min-width: 1008px) {
     display: flex;
     flex-direction: row;
+    margin-left: auto;
   }
 `;
 

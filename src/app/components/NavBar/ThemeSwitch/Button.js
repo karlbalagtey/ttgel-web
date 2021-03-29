@@ -5,7 +5,11 @@ export const Button = props => {
     props.onSelect(props.value);
   };
 
-  return <ButtonWrap onClick={handleClick}>{props.children}</ButtonWrap>;
+  return (
+    <ButtonWrap onClick={handleClick} {...props}>
+      {props.children}
+    </ButtonWrap>
+  );
 };
 
 const ButtonWrap = styled.button`
