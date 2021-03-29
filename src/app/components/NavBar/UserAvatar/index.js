@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { selectUser } from 'app/pages/LoginPage/LoginForm/slice/selectors';
 import { selectThemeKey } from 'styles/theme/slice/selectors';
@@ -39,9 +40,12 @@ export function UserAvatar() {
       </Wrapper>
       {open && (
         <Popup>
-          <Item onClick={handleLogout} title="Login">
+          <Link to="/dashboard" title="Dashboard">
+            Dashboard
+          </Link>
+          <button onClick={handleLogout} title="Login">
             Logout
-          </Item>
+          </button>
         </Popup>
       )}
     </Container>
@@ -49,7 +53,9 @@ export function UserAvatar() {
 }
 
 const Container = styled.div`
+  display: flex;
   position: relative;
+  height: ${StyleConstants.NAV_BAR_HEIGHT};
 `;
 
 const Wrapper = styled.button`
@@ -65,7 +71,21 @@ const Popup = styled.div`
   background: ${p => p.theme.background};
   top: ${StyleConstants.NAV_BAR_HEIGHT};
   display: flex;
+  flex-direction: column;
   width: 100%;
+
+  a {
+    padding: 1rem;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  button {
+    padding: 1rem;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
 `;
 
 const Name = styled.p`
@@ -83,8 +103,4 @@ const Img = styled.div`
     height: 40px;
     width: 40px;
   }
-`;
-
-const Item = styled.a`
-  padding: 1rem;
 `;
