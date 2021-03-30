@@ -8,6 +8,7 @@ import { PageBackground, PageWrapper } from 'app/components/PageWrapper';
 import { P } from '../components/P';
 import { SubTitle } from '../components/SubTitle';
 import { Card } from 'app/components/Card';
+import { CardList } from 'app/components/CardList';
 import { LoadingIndicator } from 'app/components/LoadingIndicator';
 
 export function Programme() {
@@ -62,13 +63,13 @@ export function Programme() {
             </Year>
           ))}
         </YearWrap>
-        <List>
+        <CardList>
           {courses?.length > 0 ? (
             courses.map(course => <Card key={course.id} props={course} />)
           ) : (
             <LoadingIndicator />
           )}
-        </List>
+        </CardList>
       </PageWrapper>
     </PageBackground>
   );
@@ -94,20 +95,3 @@ const Year = React.memo(styled.button`
     color: ${p => p.theme.background};
   }
 `);
-
-const List = styled.section`
-  display: grid;
-  grid-template-columns: 1fr;
-  column-gap: 1.5rem;
-  row-gap: 1.5rem;
-
-  @media (min-width: ${p => p.theme.media.sm}px) {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media (min-width: ${p => p.theme.media.md}px) {
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 2rem;
-    row-gap: 2rem;
-  }
-`;

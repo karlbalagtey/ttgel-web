@@ -1,14 +1,14 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ThemeSwitch } from './ThemeSwitch';
 import { Hamburger } from './Hamburger';
 import { StyleConstants } from 'styles/StyleConstants';
-import { selectClient } from 'app/pages/LoginPage/LoginForm/slice/selectors';
+import { selectAuth } from 'app/pages/LoginPage/LoginForm/slice/selectors';
 import { UserAvatar } from './UserAvatar';
 
 export function Nav() {
-  const client = useSelector(selectClient);
+  const auth = useSelector(selectAuth);
   const [isOpen, setIsOpen] = React.useState(false);
   const handleMenu = () => {
     setIsOpen(!isOpen);
@@ -26,8 +26,9 @@ export function Nav() {
   return (
     <>
       <Menu className={isOpen && 'show'}>
-        {client ? (
+        {auth ? (
           <>
+            <ThemeSwitch />
             <UserAvatar />
           </>
         ) : (
@@ -49,7 +50,7 @@ export function Nav() {
       </Menu>
       <GroupButton>
         <Hamburger handleClick={handleMenu} />
-        {/* <ThemeSwitch /> */}
+        {!auth && <ThemeSwitch />}
       </GroupButton>
     </>
   );
@@ -96,8 +97,10 @@ const Item = styled.a`
   padding: 1.5rem;
   transition: color 0.3s;
 
-  &:hover {
+  &:hover,
+  &:focus {
     color: ${p => p.theme.textHighlight};
+    outline: 0;
   }
 
   &:active {

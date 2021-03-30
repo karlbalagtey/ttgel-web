@@ -27,13 +27,13 @@ export function ThemeSwitch() {
     <>
       {selected === 'light' ? (
         <Button value="dark" onSelect={handleThemeChange} title="Dark mode">
-          <span className="sr-only">Dark</span>
           <DarkModeIcon value="dark" />
+          <span className="sr-only">Dark</span>
         </Button>
       ) : (
         <Button value="light" onSelect={handleThemeChange} title="Light mode">
-          <span className="sr-only">Light</span>
           <LightModeIcon value="light" />
+          <span className="sr-only">Light</span>
         </Button>
       )}
     </>

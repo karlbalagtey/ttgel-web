@@ -6,7 +6,7 @@ export const initialState = {
   user: null,
   loading: false,
   error: null,
-  client: null,
+  auth: null,
 };
 
 const slice = createSlice({
@@ -22,13 +22,11 @@ const slice = createSlice({
     },
     logout(state) {
       state.loading = true;
-      state.user = [];
+      state.auth = null;
+      state.user = null;
     },
-    setClient(state, action) {
-      state.client = action.payload;
-    },
-    unsetClient(state) {
-      state.client = null;
+    setAuth(state, action) {
+      state.auth = action.payload;
     },
     success(state, action) {
       state.user = action.payload;

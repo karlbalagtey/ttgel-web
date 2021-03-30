@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { NavBar } from 'app/components/NavBar';
 import { AppBar } from 'app/components/AppBar';
 import styled from 'styled-components';
-import { StyleConstants } from 'styles/StyleConstants';
+import { BackgroundImage } from 'app/components/BackgroundImage';
 
 export function DashboardPage() {
   return (
@@ -17,26 +17,30 @@ export function DashboardPage() {
         />
       </Helmet>
       <NavBar className={'dashboard'} />
-      <AppBar />
-      <Wrapper>
-        <Window>
-          <Title>Dashboard</Title>
-        </Window>
-      </Wrapper>
+      <AppBar title="Dashboard" />
+      <BackgroundImage>
+        <GroupButton>
+          <Button to="/courses">Courses</Button>
+          <Button to="/timetable">Timetable</Button>
+        </GroupButton>
+      </BackgroundImage>
     </>
   );
 }
 
-const Wrapper = styled.section`
+const Button = styled(Link)`
   display: flex;
+  background-color: ${p => p.theme.background};
+  text-decoration: none;
+  padding: 2rem;
+  margin: 1.5rem;
+  font-size: 1.4rem;
+  color: ${p => p.theme.text};
 `;
 
-const Window = styled.div`
-  grid-area: main;
-  padding: 1rem;
-  height: calc(100vh - ${StyleConstants.NAV_BAR_HEIGHT});
-  width: 100%;
-  background: ${p => p.theme.backgroundVariant};
+const GroupButton = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const Title = styled.h1`

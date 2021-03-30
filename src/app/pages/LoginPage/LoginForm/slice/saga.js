@@ -16,11 +16,12 @@ import { authenticate } from './api';
 import { handleError } from 'utils/handle-error';
 
 function* logout() {
-  yield put(actions.unsetClient());
-
-  localStorage.removeItem('token');
-
-  // redirect
+  try {
+    localStorage.removeItem('token');
+  } catch (error) {
+    const errorMessage = handleError(error);
+    yield put(actions.error(errorMessage));
+  }
 }
 
 function* login() {
@@ -30,7 +31,7 @@ function* login() {
     console.log(data);
     const { token, user } = data;
 
-    yield put(actions.setClient(token));
+    yield put(actions.setAuth(token));
     yield put(actions.success(user));
 
     localStorage.setItem('token', JSON.stringify(token));

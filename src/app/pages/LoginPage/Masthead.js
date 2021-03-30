@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
-import bgImage from './assets/map-image.png';
+import bgImage from 'app/components/assets/map-image.png';
 import { StyleConstants } from 'styles/StyleConstants';
 
 export function Masthead(props) {

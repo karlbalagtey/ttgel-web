@@ -18,7 +18,10 @@ const ButtonWrap = styled.button`
   background-color: transparent;
   padding: 1rem;
 
-  &:hover {
+  &:hover,
+  &:focus {
+    outline: 0;
+
     svg {
       transition: all 0.2s;
       fill: ${p => p.theme.textHighlight};

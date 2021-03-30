@@ -6,7 +6,7 @@ import styled from 'styled-components/macro';
 import { Input } from 'app/components/Input';
 import { Button } from 'app/components/Button';
 import { useLoginSlice } from './slice';
-import { selectClient } from './slice/selectors';
+import { selectAuth } from './slice/selectors';
 
 export function LoginForm() {
   const [user, setUser] = React.useState({
@@ -17,7 +17,7 @@ export function LoginForm() {
   const dispatch = useDispatch();
   const { actions } = useLoginSlice();
   const history = useHistory();
-  const userInfo = useSelector(selectClient);
+  const auth = useSelector(selectAuth);
   const { error } = useSelector(state => state.login);
 
   const handleSubmit = e => {
@@ -32,10 +32,10 @@ export function LoginForm() {
   };
 
   React.useEffect(() => {
-    if (userInfo) {
+    if (auth) {
       history.push('/dashboard');
     }
-  }, [history, userInfo]);
+  }, [history, auth]);
 
   const { email, password } = user;
   return (
