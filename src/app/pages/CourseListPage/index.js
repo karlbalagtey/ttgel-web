@@ -1,41 +1,36 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { NavBar } from 'app/components/NavBar';
 import { AppBar } from 'app/components/AppBar';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import {
   selectAuth,
   selectUser,
 } from 'app/pages/LoginPage/LoginForm/slice/selectors';
-
-import { selectProgrammes, selectCourses, selectId } from './slice/selectors';
+import { selectCourses, selectId } from './slice/selectors';
 import { useProgrammeSlice } from './slice';
 
-import { PageWrapper } from 'app/components/PageWrapper';
 import { LoadingIndicator } from 'app/components/LoadingIndicator';
 import {
   CourseList,
   Course,
   CourseDetails,
-  CourseButton,
   CourseNotes,
 } from './components/Course';
+import { Button } from './components/Button';
 
 import styled from 'styled-components/macro';
 
 export function CourseListPage() {
-  const history = useHistory;
-  // const courses = useSelector(selectCourses);
+  const history = useHistory();
+  const dispatch = useDispatch();
   const auth = useSelector(selectAuth);
   const user = useSelector(selectUser);
+  const courses = useSelector(selectCourses);
   const defaultProgramme = useSelector(selectId);
   const { actions } = useProgrammeSlice();
-  const dispatch = useDispatch();
-  const programmes = useSelector(selectProgrammes);
-  const courses = useSelector(selectCourses);
-  const [selectedYear, setSelectedYear] = React.useState(defaultProgramme);
+  const data = useParams();
 
   const fetchCourses = React.useCallback(() => {
     if (defaultProgramme && defaultProgramme.trim().length > 0) {
@@ -43,11 +38,16 @@ export function CourseListPage() {
     }
   }, [dispatch, actions, defaultProgramme]);
 
+  const handleClick = course => {
+    console.log(course);
+    const URL = `/dashboard/courses/${course.title}`;
+    history.push(URL, { id: course.id });
+  };
+
   React.useEffect(() => {
-    if (auth) {
+    console.log(data);
+    if (user.role === 'admin') {
       fetchCourses();
-      console.log(auth);
-      console.log(user);
     } else {
       history.push('/login');
     }
@@ -62,8 +62,7 @@ export function CourseListPage() {
           content="The Training Ground East London - Dashboard"
         />
       </Helmet>
-      <NavBar className={'dashboard'} />
-      <AppBar title="Courses" className="secondary" />
+      <AppBar title="Courses" />
       <Wrapper>
         <CourseList>
           {courses?.length > 0 ? (
@@ -71,13 +70,17 @@ export function CourseListPage() {
               <Course key={course.id} props={course}>
                 <img src={course.image} alt={course.title} />
                 <CourseDetails>
-                  <h2>{course.title}</h2>
+                  <h3>{course.title}</h3>
                   <p>{course.description}</p>
-                  <CourseButton>Start course</CourseButton>
+                  <Button onClick={() => handleClick(course)}>
+                    Start course
+                  </Button>
                 </CourseDetails>
                 <CourseNotes>
-                  <h2>Notes:</h2>
-                  <p>{course.notes}</p>
+                  <Announcement>
+                    <strong>Announcement:</strong>
+                    <p>{course.notes}</p>
+                  </Announcement>
                 </CourseNotes>
               </Course>
             ))
@@ -94,4 +97,18 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
+`;
+
+const Announcement = styled.div`
+  display: flex;
+
+  strong,
+  p {
+    font-size: 0.8rem;
+    margin: 0;
+  }
+
+  p {
+    padding: 0 0.5rem;
+  }
 `;

@@ -2,7 +2,7 @@ import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { createInjectorsEnhancer } from 'redux-injectors';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
-import { persistStore } from 'redux-persist';
+
 import { createReducer } from './reducers';
 
 export function configureAppStore() {
@@ -26,10 +26,7 @@ export function configureAppStore() {
 
   const store = configureStore({
     reducer: createReducer(),
-    middleware: [
-      ...getDefaultMiddleware({ serializableCheck: false }),
-      ...middlewares,
-    ],
+    middleware: [...getDefaultMiddleware(), ...middlewares],
     devTools:
       /* istanbul ignore next line */
       process.env.NODE_ENV !== 'production' ||
@@ -37,8 +34,5 @@ export function configureAppStore() {
     enhancers,
   });
 
-  const persistor = persistStore(store);
-  store.persistor = persistor;
-
-  return { store, persistor };
+  return store;
 }

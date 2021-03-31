@@ -19,10 +19,6 @@ export function UserAvatar() {
     setOpen(open => !open);
   };
 
-  React.useEffect(() => {
-    console.log(open);
-  }, [open]);
-
   return (
     <Container>
       <Wrapper onClick={handleClick}>

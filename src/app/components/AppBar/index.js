@@ -1,7 +1,10 @@
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from 'app/pages/LoginPage/LoginForm/slice/selectors';
+import { Menu, MenuLink } from './components/Menu';
+import { Title } from './components/Title';
+import { SearchBar } from './Search';
+
 import styled from 'styled-components';
 
 export function AppBar({ title }) {
@@ -10,17 +13,16 @@ export function AppBar({ title }) {
   return (
     <Wrapper>
       <Title>{title}</Title>
+      <SearchBar />
       <Menu>
-        <NavLink to="/dashboard" activeClassName="selected">
-          Dashboard
-        </NavLink>
-        <NavLink to="/courses" activeClassName="selected">
+        <MenuLink to="/dashboard">Dashboard</MenuLink>
+        <MenuLink to="/dashboard/courses" activeClassName="selected">
           Courses
-        </NavLink>
+        </MenuLink>
         {role === 'admin' && (
-          <NavLink to="/users" activeClassName="selected">
+          <MenuLink to="/dashboard/users" activeClassName="selected">
             Users
-          </NavLink>
+          </MenuLink>
         )}
       </Menu>
     </Wrapper>
@@ -29,37 +31,7 @@ export function AppBar({ title }) {
 
 const Wrapper = styled.nav`
   width: 100%;
-  background: ${p => p.theme.backgroundDarker};
+  background: ${p => p.theme.primary};
   display: flex;
   align-items: center;
-`;
-
-const Title = styled.h2`
-  color: #fff;
-  font-size: 1.3rem;
-  margin-right: auto;
-  padding: 0 1.5rem;
-`;
-
-const Menu = styled.div`
-  display: flex;
-  margin-left: auto;
-
-  a {
-    text-decoration: none;
-    font-size: 1rem;
-    color: #fff;
-    padding: 1.5rem;
-    transition: all 0.3s;
-
-    &:hover,
-    &.selected {
-      background-color: ${p => p.theme.textHighlight};
-      color: ${p => p.theme.text};
-    }
-
-    &:focus {
-      outline: 0;
-    }
-  }
 `;

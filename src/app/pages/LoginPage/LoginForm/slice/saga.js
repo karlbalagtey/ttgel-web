@@ -17,7 +17,9 @@ import { handleError } from 'utils/handle-error';
 
 function* logout() {
   try {
-    localStorage.removeItem('token');
+    console.log('logout');
+    yield localStorage.removeItem('auth');
+    yield localStorage.removeItem('user');
   } catch (error) {
     const errorMessage = handleError(error);
     yield put(actions.error(errorMessage));
@@ -28,20 +30,22 @@ function* login() {
   try {
     const { email, password } = yield select(selectUser);
     const { data } = yield call(authenticate, email, password);
-    console.log(data);
+
     const { token, user } = data;
 
     yield put(actions.setAuth(token));
     yield put(actions.success(user));
 
-    localStorage.setItem('token', JSON.stringify(token));
+    localStorage.setItem('auth', JSON.stringify(token));
+    localStorage.setItem('user', JSON.stringify(user));
+
     yield put(
       snackbarActions.notify({
         timeout: 3000,
-        message: 'Welcome',
+        message: 'Welcome to the Training Ground',
         type: 'info',
         autoClose: true,
-        position: 'bottom-right',
+        position: 'top-center',
       }),
     );
   } catch (error) {
@@ -51,7 +55,7 @@ function* login() {
     // if our forked task was cancelled
     // redirect to login
     if (yield cancelled()) {
-      // history push login
+      yield call(logout);
     }
   }
 }
@@ -77,6 +81,10 @@ export function* onWatch() {
   yield takeLatest(actions.watchAuth.type, loginWatcher);
 }
 
+export function* onLogout() {
+  yield takeLatest(actions.logout.type, logout);
+}
+
 export function* loginSaga() {
-  yield all([call(onLogin), call(onWatch)]);
+  yield all([call(onLogin), call(onWatch), call(onLogout)]);
 }

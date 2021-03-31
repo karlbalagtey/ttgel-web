@@ -3,7 +3,8 @@ import { createSelector } from '@reduxjs/toolkit';
 import { initialState } from '.';
 
 const selectSlice = state => state.programme || initialState;
-const selectFeatured = state => state.programme.featured;
+const selectFeatured = state =>
+  state.programme ? state.programme.featured : [];
 
 export const selectProgrammes = createSelector(
   [selectSlice],

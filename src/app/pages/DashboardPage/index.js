@@ -1,12 +1,20 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Switch, Route, Link, Redirect, useRouteMatch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
 import { NavBar } from 'app/components/NavBar';
-import { AppBar } from 'app/components/AppBar';
+import { CourseListPage } from '../CourseListPage';
+import { CourseDetailPage } from '../CourseDetailPage';
+import { UserListPage } from '../UserListPage';
+import { selectUser } from '../LoginPage/LoginForm/slice/selectors';
+
 import styled from 'styled-components';
 import { BackgroundImage } from 'app/components/BackgroundImage';
 
 export function DashboardPage() {
+  const user = useSelector(selectUser);
+  const { path, url } = useRouteMatch();
+
   return (
     <>
       <Helmet>
@@ -17,13 +25,34 @@ export function DashboardPage() {
         />
       </Helmet>
       <NavBar className={'dashboard'} />
-      <AppBar title="Dashboard" />
-      <BackgroundImage>
-        <GroupButton>
-          <Button to="/courses">Courses</Button>
-          <Button to="/timetable">Timetable</Button>
-        </GroupButton>
-      </BackgroundImage>
+      <Switch>
+        <Route exact path={`${url}`}>
+          <BackgroundImage>
+            <GroupButton>
+              <Button to={`${url}/courses`}>Courses</Button>
+              <Button to={`${url}/timetable`}>Timetable</Button>
+            </GroupButton>
+          </BackgroundImage>
+        </Route>
+        <Route exact path={`${path}/courses`} component={CourseListPage} />
+        <Route
+          exact
+          path={`${path}/courses/search/:keyword`}
+          component={CourseListPage}
+        />
+        <Route
+          exact
+          path={`${path}/courses/:slug`}
+          component={CourseDetailPage}
+        />
+        <Route
+          exact
+          path={`${path}/users`}
+          render={() =>
+            user.role === 'admin' ? <UserListPage /> : <Redirect to="/login" />
+          }
+        />
+      </Switch>
     </>
   );
 }
