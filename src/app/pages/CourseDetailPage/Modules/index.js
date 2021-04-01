@@ -1,21 +1,23 @@
-import { ModulesWrap, ModuleItem } from './components/Module';
+import * as React from 'react';
+import { ModulesWrap, ModuleItem, Module } from './Module';
 import { LoadingIndicator } from 'app/components/LoadingIndicator';
+import { useSelector } from 'react-redux';
+import { selectModules } from '../slice/selectors';
 
 export function Modules() {
-  const { state } = useLocation();
-  const { loading } = useSelector(state => state.course);
+  const modules = useSelector(selectModules);
 
   return (
     <ModulesWrap>
-      {/* {loading ? (
-        <LoadingIndicator />
-      ) : (
+      {modules ? (
         modules.map(mod => (
-          <ModuleItem>
-            <span>{mod.title}</span>
+          <ModuleItem key={mod.id}>
+            <Module>{mod.title}</Module>
           </ModuleItem>
         ))
-      )} */}
+      ) : (
+        <LoadingIndicator />
+      )}
     </ModulesWrap>
   );
 }

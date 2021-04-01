@@ -9,7 +9,9 @@ export function* fetchCourseDetails() {
     const id = yield select(selectId);
 
     const { data } = yield call(getCourseDetails, id);
+    const { modules } = data;
     yield put(actions.success(data));
+    yield put(actions.loadModules(modules));
   } catch (error) {
     const errorMessage = handleError(error);
     yield put(actions.error(errorMessage));

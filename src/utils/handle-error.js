@@ -7,6 +7,6 @@ export const handleError = error => {
       status: error.status,
       message: error.message,
     };
-    return response;
+    return response.message;
   }
 };

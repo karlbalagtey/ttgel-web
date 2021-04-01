@@ -7,13 +7,13 @@ const userFromStorage = localStorage.getItem('user')
   : null;
 const authFromStorage = localStorage.getItem('auth')
   ? JSON.parse(localStorage.getItem('auth'))
-  : null;
+  : false;
 
 export const initialState = {
   user: userFromStorage,
   loading: false,
   error: null,
-  auth: authFromStorage,
+  isAuth: authFromStorage,
 };
 
 const slice = createSlice({
@@ -21,26 +21,23 @@ const slice = createSlice({
   initialState,
   reducers: {
     login(state, action) {
-      state.loading = true;
       state.user = action.payload;
+      state.loading = true;
     },
     watchAuth(state) {
       state.loading = true;
     },
     logout(state) {
-      state.loading = true;
-      state.auth = null;
       state.user = null;
+      state.loading = true;
       state.error = null;
-    },
-    setAuth(state, action) {
-      state.auth = action.payload;
-      state.error = null;
+      state.isAuth = false;
     },
     success(state, action) {
       state.user = action.payload;
       state.loading = false;
       state.error = null;
+      state.isAuth = true;
     },
     error(state, action) {
       state.error = action.payload;

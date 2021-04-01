@@ -7,6 +7,7 @@ export const initialState = {
   info: null,
   error: null,
   loading: false,
+  modules: null,
 };
 
 const slice = createSlice({
@@ -20,6 +21,11 @@ const slice = createSlice({
     success(state, action) {
       state.loading = false;
       state.info = action.payload;
+      state.error = null;
+    },
+    loadModules(state, action) {
+      state.loading = false;
+      state.modules = action.payload;
       state.error = null;
     },
     error(state, action) {

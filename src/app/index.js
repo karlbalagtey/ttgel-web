@@ -18,7 +18,7 @@ import { useLoginSlice } from './pages/LoginPage/LoginForm/slice';
 export function App() {
   const dispatch = useDispatch();
   const { actions } = useLoginSlice();
-  const auth = useSelector(selectAuth);
+  const isAuth = useSelector(selectAuth);
 
   React.useEffect(() => {
     dispatch(actions.watchAuth());
@@ -38,7 +38,7 @@ export function App() {
         <Route exact path="/login" component={LoginPage} />
         <Route
           path="/dashboard"
-          render={() => (auth ? <DashboardPage /> : <Redirect to="/login" />)}
+          render={() => (isAuth ? <DashboardPage /> : <Redirect to="/login" />)}
         />
         <Route component={NotFoundPage} />
       </Switch>

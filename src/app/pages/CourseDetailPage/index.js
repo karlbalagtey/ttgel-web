@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { AppBar } from 'app/components/AppBar';
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
-import { selectCourse, selectModules } from './slice/selectors';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { selectCourse } from './slice/selectors';
 import { ReactComponent as ArrowBack } from 'app/components/assets/arrow_back_white_24dp.svg';
 import styled from 'styled-components/macro';
 
@@ -13,7 +13,6 @@ import { Masthead } from './Masthead';
 
 export function CourseDetailPage() {
   const history = useHistory();
-  const { loading } = useSelector(state => state.course);
   const course = useSelector(selectCourse);
 
   return (
@@ -29,7 +28,7 @@ export function CourseDetailPage() {
         <Button onClick={() => history.goBack()}>
           <ArrowBack />
         </Button>
-        {loading ? <LoadingIndicator /> : <AppBar title={course.title} />}
+        {course ? <AppBar title={course.title} /> : <LoadingIndicator />}
       </Wrap>
       <Modules />
       <Masthead />

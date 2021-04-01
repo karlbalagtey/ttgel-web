@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 import { ThemeSwitch } from './ThemeSwitch';
 import { Hamburger } from './Hamburger';
 import { StyleConstants } from 'styles/StyleConstants';
-import { selectAuth } from 'app/pages/LoginPage/LoginForm/slice/selectors';
+import { selectUser } from 'app/pages/LoginPage/LoginForm/slice/selectors';
 import { UserAvatar } from './UserAvatar';
 
 export function Nav() {
-  const auth = useSelector(selectAuth);
+  const user = useSelector(selectUser);
   const [isOpen, setIsOpen] = React.useState(false);
   const handleMenu = () => {
     setIsOpen(!isOpen);
@@ -26,7 +26,7 @@ export function Nav() {
   return (
     <>
       <Menu className={isOpen && 'show'}>
-        {auth ? (
+        {user ? (
           <>
             <ThemeSwitch />
             <UserAvatar />
@@ -50,7 +50,7 @@ export function Nav() {
       </Menu>
       <GroupButton>
         <Hamburger handleClick={handleMenu} />
-        {!auth && <ThemeSwitch />}
+        {!user && <ThemeSwitch />}
       </GroupButton>
     </>
   );

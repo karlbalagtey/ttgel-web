@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-export const CourseList = styled.div`
+export const CoursesWrap = styled.div`
   display: flex;
   flex-direction: column;
 

@@ -17,12 +17,11 @@ export function LoginForm() {
   const dispatch = useDispatch();
   const { actions } = useLoginSlice();
   const history = useHistory();
-  const auth = useSelector(selectAuth);
+  const isAuth = useSelector(selectAuth);
   const { error } = useSelector(state => state.login);
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(user);
     dispatch(actions.login(user));
   };
 
@@ -32,10 +31,11 @@ export function LoginForm() {
   };
 
   React.useEffect(() => {
-    if (auth) {
+    console.log(isAuth);
+    if (isAuth) {
       history.push('/dashboard');
     }
-  }, [history, auth]);
+  }, [history, isAuth]);
 
   const { email, password } = user;
   return (

@@ -1,9 +1,10 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useCourseSlice } from './slice';
-import { selectCourse, selectModules } from './slice/selectors';
+import { selectCourse } from './slice/selectors';
+import { LoadingIndicator } from 'app/components/LoadingIndicator';
 
 export function Masthead() {
   const { state } = useLocation();
@@ -13,17 +14,22 @@ export function Masthead() {
 
   React.useEffect(() => {
     dispatch(actions.fetchCourse(state.id));
-    console.log(course);
   }, [dispatch, actions, state]);
 
   return (
-    <Wrapper>
-      <CourseImage src={course.image} alt={course.title} />
-      <CourseInfo>
-        <h3>{course.title}</h3>
-        <p>{course.description}</p>
-      </CourseInfo>
-    </Wrapper>
+    <>
+      {course ? (
+        <Wrapper>
+          <CourseImage src={course.image} alt={course.title} />
+          <CourseInfo>
+            <h3>{course.title}</h3>
+            <p>{course.description}</p>
+          </CourseInfo>
+        </Wrapper>
+      ) : (
+        <LoadingIndicator />
+      )}
+    </>
   );
 }
 

@@ -3,41 +3,49 @@ import {
   call,
   all,
   put,
-  select,
   takeLatest,
+  race,
   fork,
-  cancel,
   cancelled,
 } from 'redux-saga/effects';
 import { loginActions as actions } from '.';
 import { snackbarActions } from 'app/components/SnackBar/slice';
-import { selectUser } from './selectors';
 import { authenticate } from './api';
 import { handleError } from 'utils/handle-error';
+import { delay } from './api';
+import { useSelector } from 'react-redux';
+import { selectUser } from './selectors';
 
 function* logout() {
   try {
-    console.log('logout');
-    yield localStorage.removeItem('auth');
     yield localStorage.removeItem('user');
+    yield localStorage.removeItem('auth');
+    yield put(
+      snackbarActions.notify({
+        timeout: 3000,
+        message: 'Logged out',
+        type: 'info',
+        autoClose: true,
+        position: 'top-center',
+      }),
+    );
   } catch (error) {
     const errorMessage = handleError(error);
     yield put(actions.error(errorMessage));
   }
 }
 
-function* login() {
+function* login({ email, password }) {
+  console.log(email, password);
   try {
-    const { email, password } = yield select(selectUser);
-    const { data } = yield call(authenticate, email, password);
-
-    const { token, user } = data;
-
-    yield put(actions.setAuth(token));
+    const { user, token } = yield call(authenticate, email, password);
     yield put(actions.success(user));
+    console.log(token);
+    const expInMS = token.expires * 1000;
+    console.log(expInMS);
 
-    localStorage.setItem('auth', JSON.stringify(token));
     localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('auth', JSON.stringify(token));
 
     yield put(
       snackbarActions.notify({
@@ -52,33 +60,22 @@ function* login() {
     const errorMessage = handleError(error);
     yield put(actions.error(errorMessage));
   } finally {
-    // if our forked task was cancelled
-    // redirect to login
     if (yield cancelled()) {
       yield call(logout);
     }
   }
 }
 
-export function* loginWatcher() {
+export function* watchAuth() {
   while (true) {
-    // when the generator sees this action it will pull the payload
-    // loop moves forward only after this
-    const { email, password } = yield take(actions.login);
-    // fork does not block the loop so it moves forward while in the background
-    const task = yield fork(login, email, password);
-    const action = yield take([actions.logout, actions.error]);
-    if (action.type === actions.logout.type) yield cancel(task);
-    yield call(logout);
+    const { payload } = yield take(actions.login);
+    yield fork(login, payload);
+    yield race([take(actions.logout), take(actions.error)]);
   }
 }
 
-export function* onLogin() {
-  yield takeLatest(actions.login.type, login);
-}
-
 export function* onWatch() {
-  yield takeLatest(actions.watchAuth.type, loginWatcher);
+  yield takeLatest(actions.watchAuth.type, watchAuth);
 }
 
 export function* onLogout() {
@@ -86,5 +83,5 @@ export function* onLogout() {
 }
 
 export function* loginSaga() {
-  yield all([call(onLogin), call(onWatch), call(onLogout)]);
+  yield all([call(onWatch), call(onLogout)]);
 }
