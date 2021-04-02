@@ -1,7 +1,7 @@
 import { call, put, takeLatest, select, all } from 'redux-saga/effects';
 import { courseActions as actions } from '.';
-import { selectId } from './selectors';
-import { getCourseDetails } from './api';
+import { selectId, selectModuleId } from './selectors';
+import { getCourseDetails, getModuleToPlay } from './api';
 import { handleError } from 'utils/handle-error';
 
 export function* fetchCourseDetails() {
@@ -18,10 +18,26 @@ export function* fetchCourseDetails() {
   }
 }
 
+export function* fetchModule() {
+  try {
+    const id = yield select(selectModuleId);
+    const { data } = yield call(getModuleToPlay, id);
+    console.log(data);
+    yield put(actions.loadPlayer(data));
+  } catch (error) {
+    const errorMessage = handleError(error);
+    yield put(actions.error(errorMessage));
+  }
+}
+
 export function* onFetchCourseDetails() {
   yield takeLatest(actions.fetchCourse.type, fetchCourseDetails);
 }
 
+export function* onFetchModule() {
+  yield takeLatest(actions.fetchModule.type, fetchModule);
+}
+
 export function* courseSaga() {
-  yield all([call(onFetchCourseDetails)]);
+  yield all([call(onFetchCourseDetails), call(onFetchModule)]);
 }

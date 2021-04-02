@@ -71,14 +71,6 @@ const Menu = styled.nav`
     flex-direction: column;
     width: 100%;
     margin-left: -1.5rem;
-    @supports (backdrop-filter: blur(10px)) {
-      backdrop-filter: blur(10px);
-      background-color: ${p =>
-        p.theme.background.replace(
-          /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
-          'rgba$1,0.75)',
-        )};
-    }
   }
 
   @media (min-width: 1008px) {

@@ -26,15 +26,6 @@ const Wrapper = styled.header`
   background-color: ${p => p.theme.background};
   z-index: 2;
 
-  @supports (backdrop-filter: blur(10px)) {
-    backdrop-filter: blur(10px);
-    background-color: ${p =>
-      p.theme.background.replace(
-        /rgba?(\(\s*\d+\s*,\s*\d+\s*,\s*\d+)(?:\s*,.+?)?\)/,
-        'rgba$1,0.75)',
-      )};
-  }
-
   ${PageWrapper} {
     display: flex;
     align-items: center;

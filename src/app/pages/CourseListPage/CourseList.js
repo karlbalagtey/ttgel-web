@@ -15,6 +15,7 @@ import {
   CourseDetails,
   CourseNotes,
 } from './components/Course';
+import { slugify } from '../../../utils/slugify';
 
 export function CourseList() {
   const history = useHistory();
@@ -31,7 +32,8 @@ export function CourseList() {
   }, [dispatch, actions, defaultProgramme]);
 
   const handleClick = course => {
-    const URL = `/dashboard/courses/${course.title}`;
+    const title = slugify(course.title);
+    const URL = `/dashboard/courses/${title}`;
     history.push(URL, { id: course.id });
   };
 

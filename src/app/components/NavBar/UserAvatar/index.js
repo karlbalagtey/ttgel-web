@@ -45,7 +45,8 @@ const Wrapper = styled.button`
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding: 0;
+  padding: 1rem;
+  width: 100%;
 
   &:hover,
   &:focus {
@@ -55,22 +56,34 @@ const Wrapper = styled.button`
       color: ${p => p.theme.textHighlight};
     }
   }
+
+  @media (min-width: 1008px) {
+    width: auto;
+    padding: 0;
+  }
 `;
 
 const Name = styled.p`
   color: ${p => p.theme.primary};
-  text-transform: uppercase;
-  font-size: 0.875rem;
-  font-weight: 500;
   margin: 0;
   transition: all 0.4s;
+  margin-left: 1rem;
+
+  @media (min-width: 1008px) {
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-left: 0;
+  }
 `;
 
 const Img = styled.div`
-  padding-right: 0.5rem;
+  @media (min-width: 1008px) {
+    padding-right: 0.5rem;
 
-  svg {
-    height: 40px;
-    width: 40px;
+    svg {
+      height: 40px;
+      width: 40px;
+    }
   }
 `;

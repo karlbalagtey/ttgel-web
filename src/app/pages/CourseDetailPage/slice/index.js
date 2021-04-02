@@ -8,6 +8,8 @@ export const initialState = {
   error: null,
   loading: false,
   modules: null,
+  moduleId: null,
+  player: null,
 };
 
 const slice = createSlice({
@@ -18,6 +20,10 @@ const slice = createSlice({
       state.id = action.payload;
       state.loading = true;
     },
+    fetchModule(state, action) {
+      state.moduleId = action.payload;
+      state.loading = true;
+    },
     success(state, action) {
       state.loading = false;
       state.info = action.payload;
@@ -26,6 +32,11 @@ const slice = createSlice({
     loadModules(state, action) {
       state.loading = false;
       state.modules = action.payload;
+      state.error = null;
+    },
+    loadPlayer(state, action) {
+      state.loading = false;
+      state.player = action.payload;
       state.error = null;
     },
     error(state, action) {

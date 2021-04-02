@@ -65,16 +65,10 @@ const Button = styled(Link)`
   margin: 1.5rem;
   font-size: 1.4rem;
   color: ${p => p.theme.text};
-  box-shadow: 6px 7px 7px -6px;
+  box-shadow: 6px 7px 7px -6px #000;
 `;
 
 const GroupButton = styled.div`
   display: flex;
   justify-content: center;
-`;
-
-const Title = styled.h1`
-  font-size: 2rem;
-  color: ${p => p.theme.text};
-  margin-top: 0;
 `;
