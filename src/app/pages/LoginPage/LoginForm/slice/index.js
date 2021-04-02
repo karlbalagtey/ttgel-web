@@ -2,18 +2,11 @@ import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { loginSaga } from './saga';
 
-const userFromStorage = localStorage.getItem('user')
-  ? JSON.parse(localStorage.getItem('user'))
-  : null;
-const authFromStorage = localStorage.getItem('auth')
-  ? JSON.parse(localStorage.getItem('auth'))
-  : false;
-
 export const initialState = {
-  user: userFromStorage,
+  user: null,
   loading: false,
   error: null,
-  isAuth: authFromStorage,
+  isAuth: false,
 };
 
 const slice = createSlice({
@@ -25,11 +18,11 @@ const slice = createSlice({
       state.loading = true;
     },
     watchAuth(state) {
-      state.loading = true;
+      state.loading = false;
     },
     logout(state) {
       state.user = null;
-      state.loading = true;
+      state.loading = false;
       state.error = null;
       state.isAuth = false;
     },
@@ -42,6 +35,12 @@ const slice = createSlice({
     error(state, action) {
       state.error = action.payload;
       state.loading = false;
+    },
+    reset(state) {
+      state.user = null;
+      state.loading = false;
+      state.error = null;
+      state.isAuth = false;
     },
   },
 });

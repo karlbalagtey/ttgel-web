@@ -7,7 +7,6 @@ import { selectCourse } from './slice/selectors';
 import { ReactComponent as ArrowBack } from 'app/components/assets/arrow_back_white_24dp.svg';
 import styled from 'styled-components/macro';
 
-import { LoadingIndicator } from 'app/components/LoadingIndicator';
 import { Modules } from './Modules';
 import { Masthead } from './Masthead';
 
@@ -28,7 +27,7 @@ export function CourseDetailPage() {
         <Button onClick={() => history.goBack()}>
           <ArrowBack />
         </Button>
-        {course ? <AppBar title={course.title} /> : <LoadingIndicator />}
+        <AppBar title={course ? course.title : 'Loading...'} />
       </Wrap>
       <Modules />
       <Masthead />

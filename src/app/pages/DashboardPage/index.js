@@ -65,6 +65,7 @@ const Button = styled(Link)`
   margin: 1.5rem;
   font-size: 1.4rem;
   color: ${p => p.theme.text};
+  box-shadow: 6px 7px 7px -6px;
 `;
 
 const GroupButton = styled.div`

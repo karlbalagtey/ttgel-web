@@ -9,7 +9,8 @@ export const ModuleItem = styled.div`
   display: flex;
 `;
 
-export const Module = styled.a`
+export const Module = styled.button`
   text-decoration: none;
   color: ${p => p.theme.text};
+  cursor: pointer;
 `;

@@ -10,43 +10,39 @@ import {
 } from 'redux-saga/effects';
 import { loginActions as actions } from '.';
 import { snackbarActions } from 'app/components/SnackBar/slice';
-import { authenticate } from './api';
+import { authenticate, signOut, refreshToken } from './api';
 import { handleError } from 'utils/handle-error';
-import { delay } from './api';
-import { useSelector } from 'react-redux';
-import { selectUser } from './selectors';
+import { delay } from './util';
 
-function* logout() {
+function* logout(msg) {
   try {
-    yield localStorage.removeItem('user');
-    yield localStorage.removeItem('auth');
-    yield put(
-      snackbarActions.notify({
-        timeout: 3000,
-        message: 'Logged out',
-        type: 'info',
-        autoClose: true,
-        position: 'top-center',
-      }),
-    );
+    yield call(signOut);
   } catch (error) {
     const errorMessage = handleError(error);
     yield put(actions.error(errorMessage));
   }
 }
 
+function* refreshTokenOnExpiry(token) {
+  let newToken = token;
+  while (true) {
+    try {
+      yield call(delay, newToken);
+      newToken = yield call(refreshToken);
+    } catch (error) {
+      const errorMessage = handleError(error);
+      yield put(actions.reset());
+      yield call(logout, errorMessage);
+      yield put(actions.error(errorMessage));
+    }
+  }
+}
+
 function* login({ email, password }) {
-  console.log(email, password);
   try {
     const { user, token } = yield call(authenticate, email, password);
+    yield fork(refreshTokenOnExpiry, token);
     yield put(actions.success(user));
-    console.log(token);
-    const expInMS = token.expires * 1000;
-    console.log(expInMS);
-
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('auth', JSON.stringify(token));
-
     yield put(
       snackbarActions.notify({
         timeout: 3000,
@@ -61,6 +57,7 @@ function* login({ email, password }) {
     yield put(actions.error(errorMessage));
   } finally {
     if (yield cancelled()) {
+      console.log('cancelled');
       yield call(logout);
     }
   }

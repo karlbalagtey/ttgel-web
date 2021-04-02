@@ -31,7 +31,6 @@ export function LoginForm() {
   };
 
   React.useEffect(() => {
-    console.log(isAuth);
     if (isAuth) {
       history.push('/dashboard');
     }

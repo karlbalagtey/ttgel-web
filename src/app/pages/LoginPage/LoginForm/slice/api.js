@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const authenticate = async (email, password) => {
   const URL = `${process.env.REACT_APP_API_URL}auth/login`;
-  console.log(email, password);
+
   const { data } = await axios.post(
     URL,
     {
@@ -11,25 +11,19 @@ export const authenticate = async (email, password) => {
     },
     { withCredentials: true },
   );
-  // const { user, token } = data;
+  const { token } = data;
+  localStorage.setItem('auth', JSON.stringify(token));
   // tokenUtil.setToken(token.access, token.expires);
   return data;
 };
 
-export const refreshToken = () => {
+export const refreshToken = async () => {
   const URL = `${process.env.REACT_APP_API_URL}auth/refresh-tokens`;
 
-  return axios.post(URL, {});
+  const { data } = await axios.post(URL, {}, { withCredentials: true });
+  localStorage.setItem('auth', JSON.stringify(data));
+  return data;
 };
-
-// export const checkAuth = async () => {
-//   const token = tokenUtil.getToken();
-
-//   if (!token) {
-//     const res = await tokenUtil.getRefreshToken();
-//     return Promise.resolve(res);
-//   }
-// };
 
 export const resetPassword = (token, password, confirmPassword) => {
   const URL = process.env.REACT_APP_API_URL + 'auth/reset-password';
@@ -47,6 +41,6 @@ export const resetPassword = (token, password, confirmPassword) => {
 
 export const signOut = () => {
   const URL = process.env.REACT_APP_API_URL + 'auth/logout';
-
+  localStorage.removeItem('auth');
   return axios.post(URL, {}, { withCredentials: true });
 };

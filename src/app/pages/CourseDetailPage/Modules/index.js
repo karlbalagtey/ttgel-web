@@ -3,6 +3,7 @@ import { ModulesWrap, ModuleItem, Module } from './Module';
 import { LoadingIndicator } from 'app/components/LoadingIndicator';
 import { useSelector } from 'react-redux';
 import { selectModules } from '../slice/selectors';
+import styled from 'styled-components/macro';
 
 export function Modules() {
   const modules = useSelector(selectModules);
@@ -16,8 +17,16 @@ export function Modules() {
           </ModuleItem>
         ))
       ) : (
-        <LoadingIndicator />
+        <Wrap>
+          <LoadingIndicator />
+        </Wrap>
       )}
     </ModulesWrap>
   );
 }
+
+const Wrap = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;

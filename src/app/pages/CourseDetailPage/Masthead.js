@@ -27,7 +27,9 @@ export function Masthead() {
           </CourseInfo>
         </Wrapper>
       ) : (
-        <LoadingIndicator />
+        <LoaderWrap>
+          <LoadingIndicator />
+        </LoaderWrap>
       )}
     </>
   );
@@ -37,6 +39,15 @@ const Wrapper = styled.section`
   display: flex;
   padding: 1.5rem;
   background-color: ${p => p.theme.backgroundVariant};
+`;
+
+const LoaderWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: ${p => p.theme.backgroundVariant};
+  min-height: 400px;
+  align-items: center;
 `;
 
 const CourseImage = styled.img`

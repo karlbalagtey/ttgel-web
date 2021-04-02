@@ -46,7 +46,7 @@ const Popup = styled.div`
   flex-direction: column;
   width: 100%;
   min-width: 165px;
-  box-shadow: 0px 3px 3px 0px;
+  box-shadow: 6px 7px 7px -6px;
 
   a {
     text-decoration: none;
