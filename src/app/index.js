@@ -10,7 +10,7 @@ import { SnackBar } from './components/SnackBar';
 
 import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
-import { DashboardPage } from './pages/DashboardPage';
+import { Dashboard } from './pages/DashboardPage/Loadable';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 import { useLoginSlice } from './pages/LoginPage/LoginForm/slice';
@@ -38,7 +38,7 @@ export function App() {
         <Route exact path="/login" component={LoginPage} />
         <Route
           path="/dashboard"
-          render={() => (isAuth ? <DashboardPage /> : <Redirect to="/login" />)}
+          render={() => (isAuth ? <Dashboard /> : <Redirect to="/login" />)}
         />
         <Route component={NotFoundPage} />
       </Switch>

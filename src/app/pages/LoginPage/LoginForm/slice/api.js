@@ -13,7 +13,6 @@ export const authenticate = async (email, password) => {
   );
   const { token } = data;
   localStorage.setItem('auth', JSON.stringify(token));
-  // tokenUtil.setToken(token.access, token.expires);
   return data;
 };
 

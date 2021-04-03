@@ -3,8 +3,9 @@ import { Switch, Route, Link, Redirect, useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
 import { NavBar } from 'app/components/NavBar';
-import { CourseListPage } from '../CourseListPage';
+import { CourseList } from '../CourseListPage/Loadable';
 import { CourseDetailPage } from '../CourseDetailPage';
+import { CourseManager } from '../CourseManager';
 import { UserListPage } from '../UserListPage';
 import { selectUser } from '../LoginPage/LoginForm/slice/selectors';
 
@@ -12,7 +13,7 @@ import styled from 'styled-components';
 import { BackgroundImage } from 'app/components/BackgroundImage';
 
 export function DashboardPage() {
-  const user = useSelector(selectUser);
+  const { role } = useSelector(selectUser);
   const { path, url } = useRouteMatch();
 
   return (
@@ -30,15 +31,21 @@ export function DashboardPage() {
           <BackgroundImage>
             <GroupButton>
               <Button to={`${url}/courses`}>Courses</Button>
+              {role === 'admin' && (
+                <>
+                  <Button to={`${url}/course-management`}>Add Course</Button>
+                  <Button to={`${url}/user-management`}>Users</Button>
+                </>
+              )}
               <Button to={`${url}/timetable`}>Timetable</Button>
             </GroupButton>
           </BackgroundImage>
         </Route>
-        <Route exact path={`${path}/courses`} component={CourseListPage} />
+        <Route exact path={`${path}/courses`} component={CourseList} />
         <Route
           exact
           path={`${path}/courses/search/:keyword`}
-          component={CourseListPage}
+          component={CourseList}
         />
         <Route
           exact
@@ -49,7 +56,14 @@ export function DashboardPage() {
           exact
           path={`${path}/users`}
           render={() =>
-            user.role === 'admin' ? <UserListPage /> : <Redirect to="/login" />
+            role === 'admin' ? <UserListPage /> : <Redirect to="/login" />
+          }
+        />
+        <Route
+          exact
+          path={`${path}/course-management`}
+          render={() =>
+            role === 'admin' ? <CourseManager /> : <Redirect to="/login" />
           }
         />
       </Switch>
@@ -66,9 +80,16 @@ const Button = styled(Link)`
   font-size: 1.4rem;
   color: ${p => p.theme.text};
   box-shadow: 6px 7px 7px -6px #000;
+  transition: all 0.4s;
+  text-align: center;
+
+  &:hover {
+    background-color: ${p => p.theme.textHighlight};
+    color: ${p => p.theme.background};
+  }
 `;
 
 const GroupButton = styled.div`
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 `;

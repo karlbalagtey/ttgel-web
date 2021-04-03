@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { selectUser } from 'app/pages/LoginPage/LoginForm/slice/selectors';
 import { selectCourses, selectId } from './slice/selectors';
 import { useProgrammeSlice } from './slice';
 
@@ -20,7 +19,6 @@ import { slugify } from '../../../utils/slugify';
 export function CourseList() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
   const courses = useSelector(selectCourses);
   const defaultProgramme = useSelector(selectId);
   const { actions } = useProgrammeSlice();
@@ -38,12 +36,8 @@ export function CourseList() {
   };
 
   React.useEffect(() => {
-    if (user.role === 'admin') {
-      fetchCourses();
-    } else {
-      history.push('/login');
-    }
-  }, [user, history, fetchCourses]);
+    fetchCourses();
+  }, [history, fetchCourses]);
 
   return (
     <CoursesWrap>

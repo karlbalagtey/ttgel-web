@@ -13,11 +13,17 @@ export const CoursesWrap = styled.div`
 
 export const Course = styled.div`
   display: flex;
+  flex-direction: column;
   margin-bottom: 1.5rem;
   background-color: ${p => p.theme.backgroundVariant};
 
+  @media (min-width: 800px) {
+    flex-direction: row;
+  }
+
   img {
     max-height: 200px;
+    object-fit: cover;
   }
 `;
 
@@ -41,7 +47,11 @@ export const CourseNotes = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
-  width: 30%;
+
   font-size: 0.7rem;
-  border-left: 2px solid ${p => p.theme.background};
+
+  @media (min-width: 800px) {
+    width: 30%;
+    border-left: 2px solid ${p => p.theme.background};
+  }
 `;

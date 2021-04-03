@@ -3,7 +3,7 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import { ReactComponent as SearchIcon } from '../assets/search_white_24dp.svg';
 import styled from 'styled-components';
 
-export function SearchBar() {
+export function SearchBar({ className }) {
   const history = useHistory();
   const { url } = useRouteMatch();
   const [keyword, setKeyword] = React.useState('');
@@ -15,9 +15,9 @@ export function SearchBar() {
   };
 
   return (
-    <SearchBarWrap onSubmit={handleSubmit}>
+    <SearchBarWrap className={className} onSubmit={handleSubmit}>
       <SearchIcon />
-      <input
+      <SearchInput
         type="text"
         placeholder="Search..."
         value={keyword}
@@ -28,24 +28,41 @@ export function SearchBar() {
 }
 
 const SearchBarWrap = styled.form`
+  &.search-main {
+    display: none;
+
+    @media (min-width: 815px) {
+      display: flex;
+      margin-right: auto;
+      align-items: center;
+      padding: 0 0.7rem;
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+  }
+
+  &.search-mobile {
+    display: flex;
+    padding: 1.5rem;
+    align-items: center;
+
+    @media (min-width: 815px) {
+      display: none;
+    }
+  }
+`;
+
+const SearchInput = styled.input`
   display: flex;
-  margin-right: auto;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.15);
-  padding: 0 0.7rem;
+  border: 0;
+  padding: 10px;
+  background: transparent;
+  color: #fff;
 
-  input {
-    border: 0;
-    padding: 10px;
-    background: transparent;
+  &:focus {
+    outline: 0;
+  }
+
+  &::placeholder {
     color: #fff;
-
-    &:focus {
-      outline: 0;
-    }
-
-    &::placeholder {
-      color: #fff;
-    }
   }
 `;
