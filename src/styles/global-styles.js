@@ -24,7 +24,7 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1.5em;
   }
 
-  input, select, button {
+  input, select, button, textarea {
     font-family: inherit;
     font-size: inherit;
   }

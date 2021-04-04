@@ -13,7 +13,7 @@ export const Button = styled.button`
 
   &:hover {
     svg {
-      fill: ${p => p.theme.textHighlight};
+      fill: #000;
     }
   }
 `;

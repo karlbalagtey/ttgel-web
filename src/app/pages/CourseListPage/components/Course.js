@@ -20,11 +20,6 @@ export const Course = styled.div`
   @media (min-width: 800px) {
     flex-direction: row;
   }
-
-  img {
-    max-height: 200px;
-    object-fit: cover;
-  }
 `;
 
 export const CourseDetails = styled.div`
@@ -47,7 +42,6 @@ export const CourseNotes = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
-
   font-size: 0.7rem;
 
   @media (min-width: 800px) {

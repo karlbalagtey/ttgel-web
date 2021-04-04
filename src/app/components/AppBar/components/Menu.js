@@ -34,6 +34,10 @@ export const MenuLink = styled(NavLink)`
 
   @media (min-width: 815px) {
     border-bottom: none;
+
+    &:first-child {
+      border-top: none;
+    }
   }
 
   &:hover,

@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { AppBar } from 'app/components/AppBar';
 import { useSelector } from 'react-redux';
-
 import { selectCourse } from './slice/selectors';
+
 import styled from 'styled-components/macro';
 
 import { Modules } from './Modules';

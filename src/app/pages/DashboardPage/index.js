@@ -72,7 +72,7 @@ export function DashboardPage() {
 }
 
 const Button = styled(Link)`
-  display: flex;
+  display: block;
   background-color: ${p => p.theme.background};
   text-decoration: none;
   padding: 2rem;

@@ -5,8 +5,9 @@ import { useHistory } from 'react-router-dom';
 import { selectCourses, selectId } from './slice/selectors';
 import { useProgrammeSlice } from './slice';
 
-import { Announcement } from './components/Announcement';
+import { Image } from 'app/components/Image';
 import { LoadingIndicator } from 'app/components/LoadingIndicator';
+import { Announcement } from './components/Announcement';
 import { Button } from './components/Button';
 import {
   CoursesWrap,
@@ -44,7 +45,13 @@ export function CourseList() {
       {courses?.length > 0 ? (
         courses.map(course => (
           <Course key={course.id} props={course}>
-            <img src={course.image} alt={course.title} />
+            <Image
+              src={course.image}
+              alt={course.title}
+              width={320}
+              height={320}
+              style={{ width: '320px' }}
+            />
             <CourseDetails>
               <h3>{course.title}</h3>
               <p>{course.description}</p>

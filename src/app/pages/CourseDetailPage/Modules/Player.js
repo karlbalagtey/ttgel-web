@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro';
 import { useSelector } from 'react-redux';
 import { selectId } from '../slice/selectors';
+import { Image } from 'app/components/Image';
 
 export function Player({ player }) {
   const courseId = useSelector(selectId);
@@ -13,7 +14,13 @@ export function Player({ player }) {
         </Reminder>
       )}
       <ModulePlayer>
-        <Image src={player.image} alt={player.title} />
+        <Image
+          src={player.image}
+          alt={player.title}
+          width={200}
+          height={200}
+          style={{ width: '200px' }}
+        />
         <Description>
           <h3>{player.title}</h3>
           <p>{player.description}</p>
@@ -26,10 +33,6 @@ export function Player({ player }) {
 const ModulePlayer = styled.section`
   display: flex;
   padding: 1.5rem;
-`;
-
-const Image = styled.img`
-  max-width: 100%;
 `;
 
 const Description = styled.div`

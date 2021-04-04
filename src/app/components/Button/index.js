@@ -12,6 +12,7 @@ const ButtonWrap = styled.button`
   padding: 1rem;
   color: ${p => p.theme.primary};
   border: 0;
+  cursor: pointer;
   transition: all 0.3s;
 
   &.primary {
@@ -21,16 +22,22 @@ const ButtonWrap = styled.button`
     &:hover {
       background-color: ${p => p.theme.textHighlight};
       color: ${p => p.theme.background};
-      cursor: pointer;
     }
   }
 
   &:hover {
     color: ${p => p.theme.textHighlight};
-    cursor: pointer;
   }
 
   &.w-100 {
     width: 100%;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+
+    :hover {
+      color: ${p => p.theme.primary};
+    }
   }
 `;

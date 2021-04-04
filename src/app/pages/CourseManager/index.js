@@ -1,17 +1,21 @@
 import * as React from 'react';
 import { AppBar } from 'app/components/AppBar';
+import { AddForm } from './AddForm';
+
 import styled from 'styled-components/macro';
 
 export function CourseManager() {
   return (
-    <Wrapper>
+    <>
       <AppBar title="Course Manager" search={false} admin={true} />
-      <h1>Course Manager</h1>
-    </Wrapper>
+      <Wrapper>
+        <AddForm />
+      </Wrapper>
+    </>
   );
 }
 
 const Wrapper = styled.section`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  height: calc(100vh - 8.5rem);
 `;

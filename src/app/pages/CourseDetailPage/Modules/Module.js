@@ -3,6 +3,8 @@ import styled from 'styled-components/macro';
 export const ModulesWrap = styled.section`
   display: flex;
   padding: 1.5rem;
+  overflow: auto;
+  white-space: nowrap;
 `;
 
 export const ModuleItem = styled.div`
