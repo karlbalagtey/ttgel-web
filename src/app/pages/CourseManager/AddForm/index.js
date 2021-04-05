@@ -1,19 +1,29 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components/macro';
 import { Step1 } from './Step1';
 import { Step2 } from './Step2';
 import { Button } from 'app/components/Button';
+import { useCourseSlice } from './slice';
 
 export function AddForm() {
+  const dispatch = useDispatch();
+  const { actions } = useCourseSlice();
   const [course, setCourse] = useState({
     title: '',
     description: '',
     image: '',
     audio: '',
   });
+
   const [step, setStep] = useState(1);
   const [image, setImage] = useState({ preview: '', raw: '' });
   const [notes, setNotes] = useState({ raw: '' });
+
+  const handleSubmit = () => {
+    dispatch(actions.addCourse(course));
+  };
+
   const handleImage = e => {
     if (e.target.files.length) {
       setImage({
@@ -49,7 +59,7 @@ export function AddForm() {
   return (
     <Wrapper>
       <AddFormWrap>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Step1
             step={step}
             onHandle={handleChange}

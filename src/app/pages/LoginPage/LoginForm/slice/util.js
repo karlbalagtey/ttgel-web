@@ -2,6 +2,25 @@ export const delay = token => {
   const timeNow = parseInt(Date.now().valueOf() / 1000); //unix format
   const expInSec = token.expires - timeNow;
   const expInMil = expInSec * 1000; // ms
+  const refresh5minBeforeExpiry = expInMil - 50000;
 
-  return new Promise(resolve => setTimeout(resolve, expInMil));
+  localStorage.setItem('expInMil', refresh5minBeforeExpiry);
+  return new Promise(resolve => setTimeout(resolve, refresh5minBeforeExpiry));
 };
+
+const auth = () => {
+  function getStoredToken() {
+    return localStorage.getItem('token');
+  }
+
+  function setStoredToken(token) {
+    return localStorage.setItem('token', token);
+  }
+
+  return {
+    getStoredToken,
+    setStoredToken,
+  };
+};
+
+export default auth;
