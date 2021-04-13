@@ -21,6 +21,20 @@ export const Menu = styled.nav`
   }
 `;
 
+export const MenuWrap = styled.ul`
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+
+  @media (min-width: 1008px) {
+    flex-direction: row;
+  }
+`;
+
+export const MenuItem = styled.li`
+  display: flex;
+`;
+
 export const Item = styled.a`
   color: ${p => p.theme.primary};
   cursor: pointer;
@@ -30,10 +44,8 @@ export const Item = styled.a`
   padding: 1.5rem;
   transition: color 0.3s;
 
-  &:hover,
-  &:focus {
+  &:hover {
     color: ${p => p.theme.textHighlight};
-    outline: 0;
   }
 
   &:active {

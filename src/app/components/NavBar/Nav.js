@@ -5,7 +5,7 @@ import { ThemeSwitch } from './ThemeSwitch';
 import { Hamburger } from '../Hamburger';
 import { selectUser } from 'app/pages/LoginPage/LoginForm/slice/selectors';
 import { UserAvatar } from './UserAvatar';
-import { Menu, Item } from './components/Menu';
+import { Menu, MenuWrap, MenuItem, Item } from './components/Menu';
 
 export function Nav() {
   const user = useSelector(selectUser);
@@ -27,25 +27,37 @@ export function Nav() {
     <>
       <Menu className={isOpen && 'show'}>
         {user ? (
-          <>
-            <ThemeSwitch />
-            <UserAvatar />
-          </>
+          <MenuWrap>
+            <MenuItem>
+              <ThemeSwitch />
+            </MenuItem>
+            <MenuItem>
+              <UserAvatar />
+            </MenuItem>
+          </MenuWrap>
         ) : (
-          <>
-            <Item href="#course-overview" title="Course Overview">
-              Course Overview
-            </Item>
-            <Item href="#course-details" title="Course Details">
-              Course Details
-            </Item>
-            <Item href="/signup" title="Sign Up">
-              Signup
-            </Item>
-            <Item href="/login" title="Login">
-              Login
-            </Item>
-          </>
+          <MenuWrap>
+            <MenuItem>
+              <Item href="#course-overview" title="Course Overview">
+                Course Overview
+              </Item>
+            </MenuItem>
+            <MenuItem>
+              <Item href="#course-details" title="Course Details">
+                Course Details
+              </Item>
+            </MenuItem>
+            <MenuItem>
+              <Item href="/signup" title="Sign Up">
+                Signup
+              </Item>
+            </MenuItem>
+            <MenuItem>
+              <Item href="/login" title="Login">
+                Login
+              </Item>
+            </MenuItem>
+          </MenuWrap>
         )}
       </Menu>
       <GroupButton>

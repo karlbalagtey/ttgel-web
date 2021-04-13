@@ -20,6 +20,7 @@ const ButtonWrap = styled.button`
   padding: 1rem;
   display: flex;
   align-items: center;
+  width: 100%;
 
   p {
     margin: 0;

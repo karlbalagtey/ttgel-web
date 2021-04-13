@@ -14,7 +14,7 @@ const slice = createSlice({
   reducers: {
     addCourse(state, action) {
       state.loading = true;
-      state.course = action.payload;
+      state.addedCourse = action.payload;
     },
     success(state, action) {
       state.loading = false;

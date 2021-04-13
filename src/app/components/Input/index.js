@@ -17,6 +17,7 @@ const TextGroup = styled.div`
 
 const Text = styled.input`
   color: ${p => p.theme.primary};
+  background: ${p => p.theme.background};
   padding: 1rem;
   display: block;
   width: 100%;

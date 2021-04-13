@@ -15,13 +15,9 @@ export function UserAvatar() {
   const user = useSelector(selectUser);
   const theme = useSelector(selectThemeKey);
 
-  const handleClick = () => {
-    setOpen(open => !open);
-  };
-
   return (
     <Container>
-      <Wrapper onClick={handleClick}>
+      <Wrapper onClick={() => setOpen(open => !open)}>
         <Img>
           {user.url && <img src={user.url} alt={user.name} />}
           {theme === 'light' ? <AccountIconBlack /> : <AccountIconWhite />}
@@ -33,10 +29,11 @@ export function UserAvatar() {
   );
 }
 
-const Container = styled.div`
+const Container = styled.nav`
   display: flex;
   position: relative;
   height: ${StyleConstants.NAV_BAR_HEIGHT};
+  width: 100%;
 `;
 
 const Wrapper = styled.button`
@@ -48,8 +45,7 @@ const Wrapper = styled.button`
   padding: 1rem;
   width: 100%;
 
-  &:hover,
-  &:focus {
+  &:hover {
     outline: 0;
 
     p {
@@ -77,8 +73,11 @@ const Name = styled.p`
   }
 `;
 
-const Img = styled.div`
+const Img = styled.figure`
+  margin: 0;
+
   @media (min-width: 1008px) {
+    margin: 0;
     padding-right: 0.5rem;
 
     svg {

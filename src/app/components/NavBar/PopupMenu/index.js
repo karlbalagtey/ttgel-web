@@ -9,7 +9,7 @@ import { ReactComponent as DashboardIconBlack } from '../assets/dashboard_black_
 import { ReactComponent as LogoutIconBlack } from '../assets/power_settings_new_black_24dp.svg';
 import { ReactComponent as DashboardIconWhite } from '../assets/dashboard_white_24dp.svg';
 import { ReactComponent as LogoutIconWhite } from '../assets/power_settings_new_white_24dp.svg';
-
+import { MenuItem } from '../components/Menu';
 import { StyleConstants } from 'styles/StyleConstants';
 
 export function PopupMenu() {
@@ -17,25 +17,25 @@ export function PopupMenu() {
   const { actions } = useLoginSlice();
   const theme = useSelector(selectThemeKey);
 
-  const handleLogout = () => {
-    dispatch(actions.logout());
-  };
-
   return (
     <Popup>
-      <Link to="/dashboard" title="Dashboard">
-        {theme === 'light' ? <DashboardIconBlack /> : <DashboardIconWhite />}{' '}
-        <span>Dashboard</span>
-      </Link>
-      <button onClick={handleLogout} title="Login">
-        {theme === 'light' ? <LogoutIconBlack /> : <LogoutIconWhite />}{' '}
-        <span>Logout</span>
-      </button>
+      <MenuItem>
+        <Link to="/dashboard" title="Dashboard">
+          {theme === 'light' ? <DashboardIconBlack /> : <DashboardIconWhite />}{' '}
+          <p>Dashboard</p>
+        </Link>
+      </MenuItem>
+      <MenuItem>
+        <button onClick={() => dispatch(actions.logout())} title="Login">
+          {theme === 'light' ? <LogoutIconBlack /> : <LogoutIconWhite />}{' '}
+          <p>Logout</p>
+        </button>
+      </MenuItem>
     </Popup>
   );
 }
 
-const Popup = styled.div`
+const Popup = styled.nav`
   position: absolute;
   background: ${p => p.theme.background};
   border: 1px solid ${p => p.theme.border};
@@ -50,6 +50,8 @@ const Popup = styled.div`
 
   a {
     text-decoration: none;
+    display: flex;
+    width: 100%;
   }
 
   button {
@@ -57,14 +59,18 @@ const Popup = styled.div`
     background: transparent;
     cursor: pointer;
     text-align: left;
+    display: flex;
+    width: 100%;
   }
 
-  span {
+  p {
     margin-left: 1rem;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   svg,
-  span {
+  p {
     transition: all 0.4s;
   }
 
@@ -73,11 +79,8 @@ const Popup = styled.div`
     color: ${p => p.theme.text};
     padding: 1rem;
 
-    &:hover,
-    &:focus {
-      outline: 0;
-
-      span {
+    &:hover {
+      p {
         color: ${p => p.theme.textHighlight};
       }
       svg {

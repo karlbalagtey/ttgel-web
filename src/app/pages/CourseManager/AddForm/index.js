@@ -3,8 +3,10 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components/macro';
 import { Step1 } from './Step1';
 import { Step2 } from './Step2';
-import { Button } from 'app/components/Button';
 import { useCourseSlice } from './slice';
+import { Form } from './components/Form';
+import { Button, GroupButton, SubmitButton } from './components/Buttons';
+import { PreviewWrap } from './Preview';
 
 export function AddForm() {
   const dispatch = useDispatch();
@@ -20,7 +22,8 @@ export function AddForm() {
   const [image, setImage] = useState({ preview: '', raw: '' });
   const [notes, setNotes] = useState({ raw: '' });
 
-  const handleSubmit = () => {
+  const handleSubmit = e => {
+    e.preventDefault();
     dispatch(actions.addCourse(course));
   };
 
@@ -71,37 +74,43 @@ export function AddForm() {
             onImage={handleImage}
             onHandleNotes={handleNotes}
             image={image}
+            notes={notes}
           />
-          <GroupButton>
-            {step !== 1 && (
+          {step <= 2 && (
+            <GroupButton>
+              {step !== 1 && (
+                <Button className="primary" onClick={prevStep}>
+                  Previous
+                </Button>
+              )}
+
+              <Button
+                className="primary"
+                style={{ marginLeft: 'auto' }}
+                onClick={nextStep}
+              >
+                Next
+              </Button>
+            </GroupButton>
+          )}
+          {step > 2 && (
+            <GroupButton>
               <Button className="primary" onClick={prevStep}>
                 Previous
               </Button>
-            )}
-
-            <Button
-              className="primary"
-              style={{ marginLeft: 'auto' }}
-              onClick={nextStep}
-            >
-              Next
-            </Button>
-          </GroupButton>
+              <SubmitButton type="submit" className="primary">
+                Submit
+              </SubmitButton>
+            </GroupButton>
+          )}
         </Form>
       </AddFormWrap>
-      <Preview>
-        <h3>{title}</h3>
-        <p>{description}</p>
-        {image.preview && (
-          <img
-            src={image.preview}
-            alt="Preview"
-            width="250"
-            height="250"
-            style={{ marginBottom: '1.5rem' }}
-          />
-        )}
-      </Preview>
+      <PreviewWrap
+        title={title}
+        description={description}
+        image={image}
+        step={step}
+      />
     </Wrapper>
   );
 }
@@ -117,25 +126,4 @@ const AddFormWrap = styled.section`
   width: 50%;
   height: 100%;
   background-color: ${p => p.theme.backgroundVariant};
-`;
-
-const Preview = styled.section`
-  display: flex;
-  padding: 1.5rem;
-  flex-direction: column;
-  width: 50%;
-  height: 100%;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-`;
-
-const GroupButton = styled.div`
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  margin-top: auto;
 `;

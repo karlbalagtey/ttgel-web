@@ -16,10 +16,7 @@ const Wrapper = styled(Link)`
   align-items: center;
   text-decoration: none;
 
-  &:hover,
-  &:focus {
-    outline: 0;
-
+  &:hover {
     h1,
     p {
       color: ${p => p.theme.textHighlight};
@@ -36,8 +33,13 @@ const Title = styled.h1`
 `;
 
 const Description = styled.p`
-  font-size: 0.875rem;
-  color: ${p => p.theme.textSecondary};
-  font-weight: normal;
-  transition: all 0.3s;
+  display: none;
+
+  @media (min-width: 700px) {
+    display: block;
+    font-size: 0.875rem;
+    color: ${p => p.theme.textSecondary};
+    font-weight: normal;
+    transition: all 0.3s;
+  }
 `;

@@ -93,7 +93,7 @@ const Wrapper = styled.div`
     ${props => fadeout(props.position)} 0.5s ${props => props.time}; */
 
   &.success {
-    background-color: green;
+    background-color: ${p => p.theme.textHighlight};
   }
 
   &.error {
@@ -101,7 +101,7 @@ const Wrapper = styled.div`
   }
 
   &.info {
-    background-color: blue;
+    background-color: #58a6ff;
   }
 `;
 

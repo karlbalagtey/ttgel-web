@@ -1,5 +1,5 @@
 import { createSlice } from 'utils/@reduxjs/toolkit';
-import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
+import { useInjectReducer, useInjectSaga } from 'redux-injectors';
 import { programmeSaga } from './saga';
 
 // The initial state of the Homepage
