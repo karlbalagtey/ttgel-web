@@ -28,6 +28,7 @@ export function SearchBar({ className }) {
 }
 
 const SearchBarWrap = styled.form`
+  width: 100%;
   &.search-main {
     display: none;
 
@@ -36,6 +37,7 @@ const SearchBarWrap = styled.form`
       margin-right: auto;
       align-items: center;
       padding: 0 0.7rem;
+      width: auto;
       background-color: rgba(255, 255, 255, 0.15);
     }
   }
@@ -57,10 +59,6 @@ const SearchInput = styled.input`
   padding: 10px;
   background: transparent;
   color: #fff;
-
-  &:focus {
-    outline: 0;
-  }
 
   &::placeholder {
     color: #fff;

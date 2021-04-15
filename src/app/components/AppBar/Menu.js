@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { MenuWrap, MenuLink } from './components/Menu';
+import { MenuWrap, MenuItem, MenuLink } from './components/Menu';
 import { useSelector } from 'react-redux';
 import { selectUser } from 'app/pages/LoginPage/LoginForm/slice/selectors';
 import { Hamburger } from '../Hamburger';
@@ -23,19 +23,31 @@ export function Menu() {
 
   return (
     <>
-      <MenuWrap className={isOpen && 'show'}>
-        <MenuLink to="/dashboard">Dashboard</MenuLink>
-        <MenuLink to="/dashboard/courses" activeClassName="selected">
-          Courses
-        </MenuLink>
-        {role === 'admin' && (
-          <MenuLink to="/dashboard/users" activeClassName="selected">
-            Users
+      <MenuWrap role="appmenu" className={isOpen && 'show'}>
+        <MenuItem role="appmenuitem">
+          <MenuLink to="/dashboard">Dashboard</MenuLink>
+        </MenuItem>
+        <MenuItem role="appmenuitem">
+          <MenuLink to="/dashboard/courses" activeClassName="selected">
+            Courses
           </MenuLink>
-        )}
-        <SearchBar className="search-mobile" />
+        </MenuItem>
+        <MenuItem role="appmenuitem">
+          {role === 'admin' && (
+            <MenuLink to="/dashboard/users" activeClassName="selected">
+              Users
+            </MenuLink>
+          )}
+        </MenuItem>
+        <MenuItem role="appmenuitem">
+          <SearchBar className="search-mobile" />
+        </MenuItem>
       </MenuWrap>
-      <Hamburger className="appbar" handleClick={handleMenu} />
+      <Hamburger
+        className="appbar"
+        handleClick={handleMenu}
+        expanded={isOpen}
+      />
     </>
   );
 }

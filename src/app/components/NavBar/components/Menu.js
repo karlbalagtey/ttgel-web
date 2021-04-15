@@ -2,32 +2,40 @@ import { StyleConstants } from 'styles/StyleConstants';
 import styled from 'styled-components/macro';
 
 export const Menu = styled.nav`
-  display: none;
-
-  &.show {
-    background-color: ${p => p.theme.background};
-    position: absolute;
-    top: ${StyleConstants.NAV_BAR_HEIGHT};
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-left: -1.5rem;
-  }
+  background-color: ${p => p.theme.background};
+  flex-direction: column;
 
   @media (min-width: 1008px) {
     display: flex;
     flex-direction: row;
     margin-left: auto;
+    padding: 20px;
   }
 `;
 
 export const MenuWrap = styled.ul`
-  display: flex;
-  flex-direction: column;
-  margin: 0;
+  display: none;
+
+  &.is-mobile {
+    position: absolute;
+    top: ${StyleConstants.NAV_BAR_HEIGHT};
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: ${p => p.theme.background};
+    margin: 0;
+    right: 0;
+
+    @media (min-width: 700px) {
+      width: 30%;
+    }
+  }
 
   @media (min-width: 1008px) {
+    display: flex;
     flex-direction: row;
+    margin: 0;
+    align-items: center;
   }
 `;
 

@@ -9,7 +9,7 @@ import { ReactComponent as DashboardIconBlack } from '../assets/dashboard_black_
 import { ReactComponent as LogoutIconBlack } from '../assets/power_settings_new_black_24dp.svg';
 import { ReactComponent as DashboardIconWhite } from '../assets/dashboard_white_24dp.svg';
 import { ReactComponent as LogoutIconWhite } from '../assets/power_settings_new_white_24dp.svg';
-import { MenuItem } from '../components/Menu';
+import { MenuWrap, MenuItem } from '../components/Menu';
 import { StyleConstants } from 'styles/StyleConstants';
 
 export function PopupMenu() {
@@ -35,7 +35,7 @@ export function PopupMenu() {
   );
 }
 
-const Popup = styled.nav`
+const Popup = styled(MenuWrap)`
   position: absolute;
   background: ${p => p.theme.background};
   border: 1px solid ${p => p.theme.border};

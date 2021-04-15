@@ -15,6 +15,7 @@ const Wrapper = styled(Link)`
   display: flex;
   align-items: center;
   text-decoration: none;
+  padding: 20px;
 
   &:hover {
     h1,

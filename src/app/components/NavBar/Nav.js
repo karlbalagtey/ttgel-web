@@ -1,5 +1,4 @@
 import * as React from 'react';
-import styled from 'styled-components/macro';
 import { useSelector } from 'react-redux';
 import { ThemeSwitch } from './ThemeSwitch';
 import { Hamburger } from '../Hamburger';
@@ -24,50 +23,46 @@ export function Nav() {
   });
 
   return (
-    <>
-      <Menu className={isOpen && 'show'}>
-        {user ? (
-          <MenuWrap>
-            <MenuItem>
-              <ThemeSwitch />
-            </MenuItem>
-            <MenuItem>
-              <UserAvatar />
-            </MenuItem>
-          </MenuWrap>
-        ) : (
-          <MenuWrap>
-            <MenuItem>
-              <Item href="#course-overview" title="Course Overview">
-                Course Overview
-              </Item>
-            </MenuItem>
-            <MenuItem>
-              <Item href="#course-details" title="Course Details">
-                Course Details
-              </Item>
-            </MenuItem>
-            <MenuItem>
-              <Item href="/signup" title="Sign Up">
-                Signup
-              </Item>
-            </MenuItem>
-            <MenuItem>
-              <Item href="/login" title="Login">
-                Login
-              </Item>
-            </MenuItem>
-          </MenuWrap>
-        )}
-      </Menu>
-      <GroupButton>
-        <Hamburger className="navbar" handleClick={handleMenu} />
-        {!user && <ThemeSwitch />}
-      </GroupButton>
-    </>
+    <Menu aria-label="Main Navigation">
+      <Hamburger
+        className="navbar"
+        handleClick={handleMenu}
+        expanded={isOpen}
+      />
+      {user ? (
+        <MenuWrap className={isOpen && 'is-mobile'} role="menu">
+          <MenuItem role="menuitem">
+            <ThemeSwitch />
+          </MenuItem>
+          <MenuItem role="menuitem">
+            <UserAvatar />
+          </MenuItem>
+        </MenuWrap>
+      ) : (
+        <MenuWrap className={isOpen && 'is-mobile'} role="menu">
+          <MenuItem role="menuitem">
+            <Item href="#course-overview" title="Course Overview">
+              Course Overview
+            </Item>
+          </MenuItem>
+          <MenuItem role="menuitem">
+            <Item href="#course-details" title="Course Details">
+              Course Details
+            </Item>
+          </MenuItem>
+          <MenuItem role="menuitem">
+            <Item href="/signup" title="Sign Up">
+              Signup
+            </Item>
+          </MenuItem>
+          <MenuItem role="menuitem">
+            <Item href="/login" title="Login">
+              Login
+            </Item>
+          </MenuItem>
+        </MenuWrap>
+      )}
+      {!user && <ThemeSwitch />}
+    </Menu>
   );
 }
-
-export const GroupButton = styled.div`
-  display: flex;
-`;

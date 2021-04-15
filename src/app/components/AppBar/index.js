@@ -11,7 +11,7 @@ export function AppBar({ title, search = true, admin = false }) {
   const history = useHistory();
 
   return (
-    <Wrapper>
+    <Wrapper aria-label="Application Navigation">
       <Button onClick={() => history.goBack()}>
         <ArrowBack />
       </Button>
