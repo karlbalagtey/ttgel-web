@@ -47,6 +47,10 @@ const SearchBarWrap = styled.form`
     padding: 1.5rem;
     align-items: center;
 
+    input {
+      width: 100%;
+    }
+
     @media (min-width: 815px) {
       display: none;
     }

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ThemeSwitch } from './ThemeSwitch';
 import { Hamburger } from '../Hamburger';
@@ -8,12 +8,12 @@ import { Menu, MenuWrap, MenuItem, Item } from './components/Menu';
 
 export function Nav() {
   const user = useSelector(selectUser);
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const handleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('resize', () => {
       const isMobile = window.innerWidth < 1008;
       if (isMobile) {
@@ -35,7 +35,7 @@ export function Nav() {
             <ThemeSwitch />
           </MenuItem>
           <MenuItem role="menuitem">
-            <UserAvatar />
+            <UserAvatar isMobile={isOpen} />
           </MenuItem>
         </MenuWrap>
       ) : (
@@ -60,9 +60,11 @@ export function Nav() {
               Login
             </Item>
           </MenuItem>
+          <MenuItem role="menuitem">
+            <ThemeSwitch />
+          </MenuItem>
         </MenuWrap>
       )}
-      {!user && <ThemeSwitch />}
     </Menu>
   );
 }

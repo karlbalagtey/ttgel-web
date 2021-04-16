@@ -9,7 +9,7 @@ export const Menu = styled.nav`
     display: flex;
     flex-direction: row;
     margin-left: auto;
-    padding: 20px;
+    padding: 0 20px;
   }
 `;
 
@@ -35,7 +35,6 @@ export const MenuWrap = styled.ul`
     display: flex;
     flex-direction: row;
     margin: 0;
-    align-items: center;
   }
 `;
 
@@ -47,10 +46,10 @@ export const Item = styled.a`
   color: ${p => p.theme.primary};
   cursor: pointer;
   text-decoration: none;
-  text-transform: uppercase;
   display: flex;
   padding: 1.5rem;
   transition: color 0.3s;
+  width: 100%;
 
   &:hover {
     color: ${p => p.theme.textHighlight};

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { selectUser } from 'app/pages/LoginPage/LoginForm/slice/selectors';
@@ -10,21 +10,21 @@ import { ReactComponent as AccountIconWhite } from '../assets/account_circle_whi
 
 import { StyleConstants } from 'styles/StyleConstants';
 
-export function UserAvatar() {
-  const [open, setOpen] = React.useState(false);
+export function UserAvatar({ isMobile }) {
+  const [open, setOpen] = useState(false);
   const user = useSelector(selectUser);
   const theme = useSelector(selectThemeKey);
 
   return (
     <Container>
-      <Wrapper onClick={() => setOpen(open => !open)}>
+      <Button onClick={() => setOpen(open => !open)}>
         <Img>
           {user.url && <img src={user.url} alt={user.name} />}
           {theme === 'light' ? <AccountIconBlack /> : <AccountIconWhite />}
         </Img>
         <Name>{user.name}</Name>
-      </Wrapper>
-      {open && <PopupMenu />}
+      </Button>
+      {(open || isMobile) && <PopupMenu />}
     </Container>
   );
 }
@@ -36,7 +36,7 @@ const Container = styled.nav`
   width: 100%;
 `;
 
-const Wrapper = styled.button`
+const Button = styled.button`
   border: 0;
   background: transparent;
   cursor: pointer;

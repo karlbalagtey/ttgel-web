@@ -51,18 +51,6 @@ export function Programme() {
           Over the two year programme we cover six main topics, three in each
           year
         </P>
-        <YearWrap>
-          {programmes.map(p => (
-            <Year
-              key={p.id}
-              id={p.id}
-              onClick={handleYear}
-              className={p.id === selectedYear ? 'active' : ''}
-            >
-              {p.title}
-            </Year>
-          ))}
-        </YearWrap>
         <CardList>
           {courses?.length > 0 ? (
             courses.map(course => <Card key={course.id} props={course} />)

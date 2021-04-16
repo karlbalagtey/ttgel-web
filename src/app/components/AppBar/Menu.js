@@ -23,6 +23,11 @@ export function Menu() {
 
   return (
     <>
+      <Hamburger
+        className="appbar"
+        handleClick={handleMenu}
+        expanded={isOpen}
+      />
       <MenuWrap role="appmenu" className={isOpen && 'show'}>
         <MenuItem role="appmenuitem">
           <MenuLink to="/dashboard">Dashboard</MenuLink>
@@ -43,11 +48,6 @@ export function Menu() {
           <SearchBar className="search-mobile" />
         </MenuItem>
       </MenuWrap>
-      <Hamburger
-        className="appbar"
-        handleClick={handleMenu}
-        expanded={isOpen}
-      />
     </>
   );
 }

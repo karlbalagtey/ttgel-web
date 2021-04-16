@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
-import { Logo } from './Logo';
+import { Logo } from './components/Logo';
 import { StyleConstants } from 'styles/StyleConstants';
 import { Nav } from './Nav';
 

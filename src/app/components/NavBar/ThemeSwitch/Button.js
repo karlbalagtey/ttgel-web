@@ -20,7 +20,6 @@ const ButtonWrap = styled.button`
   padding: 1rem;
   display: flex;
   align-items: center;
-  width: 100%;
 
   p {
     margin: 0;
@@ -28,9 +27,7 @@ const ButtonWrap = styled.button`
     color: ${p => p.theme.text};
   }
 
-  &:hover,
-  &:focus {
-    outline: 0;
+  &:hover {
     p {
       color: ${p => p.theme.textHighlight};
     }

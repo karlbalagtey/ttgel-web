@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ import { useLoginSlice } from './slice';
 import { selectAuth } from './slice/selectors';
 
 export function LoginForm() {
-  const [user, setUser] = React.useState({
+  const [user, setUser] = useState({
     email: '',
     password: '',
   });
@@ -30,7 +30,7 @@ export function LoginForm() {
     setUser({ ...user, [name]: value });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isAuth) {
       history.push('/dashboard');
     }
