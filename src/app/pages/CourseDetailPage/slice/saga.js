@@ -1,5 +1,6 @@
 import { call, put, takeLatest, select, all } from 'redux-saga/effects';
 import { courseActions as actions } from '.';
+import { loginActions } from '../../LoginPage/LoginForm/slice';
 import { selectId, selectModuleId } from './selectors';
 import { getCourseDetails, getModuleToPlay } from './api';
 import { handleError } from 'utils/handle-error';
@@ -14,7 +15,10 @@ export function* fetchCourseDetails() {
     yield put(actions.loadModules(modules));
   } catch (error) {
     const errorMessage = handleError(error);
-    yield put(actions.error(errorMessage));
+    if (errorMessage) {
+      yield put(actions.error(errorMessage));
+    }
+    yield put(loginActions.logout('Session ended'));
   }
 }
 
@@ -26,7 +30,10 @@ export function* fetchModule() {
     yield put(actions.loadPlayer(data));
   } catch (error) {
     const errorMessage = handleError(error);
-    yield put(actions.error(errorMessage));
+    if (errorMessage) {
+      yield put(actions.error(errorMessage));
+    }
+    yield put(loginActions.logout('Session ended'));
   }
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -20,7 +20,7 @@ export function App() {
   const { actions } = useLoginSlice();
   const isAuth = useSelector(selectAuth);
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(actions.watchAuth());
   }, [dispatch, actions]);
 

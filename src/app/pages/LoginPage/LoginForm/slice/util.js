@@ -17,9 +17,14 @@ const auth = () => {
     return localStorage.setItem('token', token);
   }
 
+  function clearStoredToken() {
+    return localStorage.removeItem('token');
+  }
+
   return {
     getStoredToken,
     setStoredToken,
+    clearStoredToken,
   };
 };
 

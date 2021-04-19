@@ -6,15 +6,16 @@ import {
   takeLatest,
   race,
   fork,
+  delay,
   cancelled,
+  cancel,
 } from 'redux-saga/effects';
 import { loginActions as actions } from '.';
 import { snackbarActions } from 'app/components/SnackBar/slice';
 import { authenticate, signOut, refreshToken } from './api';
 import { handleError } from 'utils/handle-error';
-import { delay } from './util';
 
-function* logout(msg) {
+function* logout() {
   try {
     yield call(signOut);
   } catch (error) {
@@ -27,21 +28,32 @@ function* refreshTokenOnExpiry(token) {
   let newToken = token;
   while (true) {
     try {
-      yield call(delay, newToken);
+      const timeNow = parseInt(Date.now().valueOf() / 1000); //unix format
+      const expInSec = newToken.expires - timeNow;
+      const expInMil = expInSec * 1000; // ms
+      const tenSeconds = expInMil - 50000; // for testing
+
+      yield delay(tenSeconds);
       newToken = yield call(refreshToken);
     } catch (error) {
       const errorMessage = handleError(error);
       yield put(actions.reset());
-      yield call(logout, errorMessage);
+      // yield call(logout, errorMessage);
       yield put(actions.error(errorMessage));
+    } finally {
+      if (yield cancelled()) {
+        console.log('refresh cancelled');
+        yield cancel(newToken);
+      }
     }
   }
 }
 
 function* login({ email, password }) {
+  let task;
   try {
     const { user, token } = yield call(authenticate, email, password);
-    yield fork(refreshTokenOnExpiry, token);
+    task = yield fork(refreshTokenOnExpiry, token);
     yield put(actions.success(user));
     yield put(
       snackbarActions.notify({
@@ -57,8 +69,8 @@ function* login({ email, password }) {
     yield put(actions.error(errorMessage));
   } finally {
     if (yield cancelled()) {
-      console.log('cancelled');
-      yield call(logout);
+      console.log('cancelled login');
+      yield cancel(task);
     }
   }
 }
