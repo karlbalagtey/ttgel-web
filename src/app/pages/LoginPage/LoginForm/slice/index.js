@@ -7,6 +7,8 @@ export const initialState = {
   loading: false,
   error: null,
   isAuth: false,
+  isRefreshing: false,
+  expiresIn: null,
 };
 
 const slice = createSlice({
@@ -27,7 +29,8 @@ const slice = createSlice({
       state.isAuth = false;
     },
     success(state, action) {
-      state.user = action.payload;
+      state.user = action.payload.user;
+      state.expiresIn = action.payload.token.expires;
       state.loading = false;
       state.error = null;
       state.isAuth = true;
@@ -41,6 +44,13 @@ const slice = createSlice({
       state.loading = false;
       state.error = null;
       state.isAuth = false;
+    },
+    refreshStart(state) {
+      state.isRefreshing = true;
+    },
+    refreshSuccess(state, action) {
+      state.isRefreshing = false;
+      state.expiresIn = action.payload;
     },
   },
 });

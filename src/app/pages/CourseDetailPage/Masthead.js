@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -12,8 +12,10 @@ export function Masthead() {
   const { actions } = useCourseSlice();
   const course = useSelector(selectCourse);
 
-  React.useEffect(() => {
-    dispatch(actions.fetchCourse(state.id));
+  useEffect(() => {
+    if (state && state.id) {
+      dispatch(actions.fetchCourse(state.id));
+    }
   }, [dispatch, actions, state]);
 
   return (

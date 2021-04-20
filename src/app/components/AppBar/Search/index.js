@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { ReactComponent as SearchIcon } from '../assets/search_white_24dp.svg';
 import styled from 'styled-components';
@@ -6,12 +6,12 @@ import styled from 'styled-components';
 export function SearchBar({ className }) {
   const history = useHistory();
   const { url } = useRouteMatch();
-  const [keyword, setKeyword] = React.useState('');
+  const [keyword, setKeyword] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
     console.log('submitted', keyword);
-    history.push(`${url}/${keyword}`);
+    history.push(`${url}/search?=${keyword}`);
   };
 
   return (

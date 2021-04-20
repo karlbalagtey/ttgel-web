@@ -1,4 +1,5 @@
 import axios from 'axios';
+import auth from './util';
 
 export const authenticate = async (email, password) => {
   const URL = `${process.env.REACT_APP_API_URL}auth/login`;
@@ -12,7 +13,7 @@ export const authenticate = async (email, password) => {
     { withCredentials: true },
   );
   const { token } = data;
-  localStorage.setItem('auth', JSON.stringify(token));
+  auth.setStoredToken(token);
   return data;
 };
 
@@ -20,7 +21,7 @@ export const refreshToken = async () => {
   const URL = `${process.env.REACT_APP_API_URL}auth/refresh-tokens`;
 
   const { data } = await axios.post(URL, {}, { withCredentials: true });
-  localStorage.setItem('auth', JSON.stringify(data));
+  auth.setStoredToken(data);
   return data;
 };
 
@@ -40,6 +41,6 @@ export const resetPassword = (token, password, confirmPassword) => {
 
 export const signOut = () => {
   const URL = process.env.REACT_APP_API_URL + 'auth/logout';
-  localStorage.removeItem('auth');
+  auth.clearStoredToken();
   return axios.post(URL, {}, { withCredentials: true });
 };

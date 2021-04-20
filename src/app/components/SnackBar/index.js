@@ -17,11 +17,11 @@ export function SnackBar() {
   let snackbarPosition;
   let time = (timeout - 500) / 1000 + 's';
   let timer;
-  const handleTimeout = React.useCallback(() => {
+  const handleTimeout = () => {
     timer = setTimeout(() => {
       dispatch(actions.close());
     }, timeout);
-  });
+  };
 
   const handleClose = () => {
     clearTimeout(timer);
@@ -35,7 +35,7 @@ export function SnackBar() {
     return () => {
       clearTimeout(timer);
     };
-  }, [autoClose, timer, show, handleTimeout]);
+  }, [autoClose, timer]);
 
   snackbarPosition = setPosition(position, snackbarPosition);
 

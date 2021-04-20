@@ -10,15 +10,15 @@ export const delay = token => {
 
 const auth = () => {
   function getStoredToken() {
-    return localStorage.getItem('token');
+    return localStorage.getItem('auth');
   }
 
   function setStoredToken(token) {
-    return localStorage.setItem('token', token);
+    return localStorage.setItem('auth', JSON.stringify(token));
   }
 
   function clearStoredToken() {
-    return localStorage.removeItem('token');
+    return localStorage.removeItem('auth');
   }
 
   return {
@@ -28,4 +28,4 @@ const auth = () => {
   };
 };
 
-export default auth;
+export default auth();
