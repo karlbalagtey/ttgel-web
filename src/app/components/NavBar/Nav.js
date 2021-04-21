@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ThemeSwitch } from './ThemeSwitch';
 import { Hamburger } from '../Hamburger';
-import { selectUser } from 'app/pages/LoginPage/LoginForm/slice/selectors';
+import {
+  selectUser,
+  selectAuth,
+} from 'app/pages/LoginPage/LoginForm/slice/selectors';
 import { UserAvatar } from './UserAvatar';
 import { Menu, MenuWrap, MenuItem, Item } from './components/Menu';
 
 export function Nav() {
   const user = useSelector(selectUser);
+  const isAuth = useSelector(selectAuth);
   const [isOpen, setIsOpen] = useState(false);
   const handleMenu = () => {
     setIsOpen(!isOpen);
@@ -29,7 +33,7 @@ export function Nav() {
         handleClick={handleMenu}
         expanded={isOpen}
       />
-      {user ? (
+      {isAuth ? (
         <MenuWrap className={isOpen && 'is-mobile'} role="menu">
           <MenuItem role="menuitem">
             <ThemeSwitch />

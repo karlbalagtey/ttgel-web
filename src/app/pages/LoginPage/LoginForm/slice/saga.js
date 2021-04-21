@@ -8,63 +8,42 @@ import {
   fork,
   delay,
   cancel,
+  join,
   select,
 } from 'redux-saga/effects';
 import { loginActions as actions } from '.';
 import { snackbarActions } from 'app/components/SnackBar/slice';
 import { authenticate, signOut, refreshToken } from './api';
 import { handleError } from 'utils/handle-error';
-import { selectExpiresIn, selectUser } from './selectors';
+import { selectExpiresIn } from './selectors';
 import auth from './util';
 
-function* logout() {
-  try {
-    yield call(signOut);
-  } catch (error) {
-    const errorMessage = handleError(error);
-    yield put(actions.error(errorMessage));
+function* refreshTokenOnExpiry(token = null) {
+  while (true) {
+    const createdAt = Math.round(Date.now().valueOf() / 1000);
+    const expiresIn = yield select(selectExpiresIn);
+    const expInSec = expiresIn - createdAt;
+    const expInMil = expInSec * 1000; // ms
+    const tenSeconds = expInMil - 50000; // for testing
+
+    if (!token) {
+      return;
+    }
+
+    console.log('refresh before delay');
+    console.log(tenSeconds);
+    yield delay(tenSeconds);
+    console.log('after delay');
+    yield put(actions.refreshStart());
+    const { expires } = yield call(refreshToken);
+    yield put(actions.refreshSuccess(expires));
   }
 }
 
-// function* refreshTokenOnExpiry() {
-//   while (true) {
-//     const createdAt = Math.round(Date.now().valueOf() / 1000);
-//     const expiresIn = yield select(selectExpiresIn);
-//     const expInSec = expiresIn - createdAt;
-//     const expInMil = expInSec * 1000; // ms
-//     const tenSeconds = expInMil - 50000; // for testing
-
-//     yield delay(tenSeconds);
-//     yield put(actions.refreshStart());
-//     yield call(refreshToken);
-//     yield put(actions.refreshSuccess(expiresIn));
-//   }
-// }
-
-// function* login({ email, password }) {
-//   try {
-//     const data = yield call(authenticate, email, password);
-//     yield put(actions.success(data));
-//     // yield fork(refreshTokenOnExpiry);
-//     yield put(
-//       snackbarActions.notify({
-//         timeout: 3000,
-//         message: 'Welcome to the Training Ground',
-//         type: 'info',
-//         autoClose: true,
-//         position: 'top-center',
-//       }),
-//     );
-//   } catch (error) {
-//     const errorMessage = handleError(error);
-//     yield put(actions.error(errorMessage));
-//   }
-// }
-
-function* authorize() {
+function* login({ email, password }) {
   try {
-    const { email, password } = yield select(selectUser);
     const data = yield call(authenticate, email, password);
+
     yield put(actions.success(data));
     yield put(
       snackbarActions.notify({
@@ -79,55 +58,32 @@ function* authorize() {
   } catch (error) {
     const errorMessage = handleError(error);
     yield put(actions.error(errorMessage));
-    return null;
-  }
-}
-
-function* authorizeLoop(token) {
-  while (true) {
-    token = yield call(authorize);
-    if (token == null) {
-      return;
-    }
-    const createdAt = Math.round(Date.now().valueOf() / 1000);
-    const expiresIn = yield select(selectExpiresIn);
-    const expInSec = expiresIn - createdAt;
-    const expInMil = expInSec * 1000; // ms
-    const tenSeconds = expInMil - 50000; // for testing
-    console.log(tenSeconds);
-    yield delay(tenSeconds);
-    yield put(actions.refreshStart());
-    yield call(refreshToken);
-    yield put(actions.refreshSuccess(expiresIn));
   }
 }
 
 export function* watchAuth() {
-  const storedToken = yield call(auth.getStoredToken);
+  let storedToken = yield call(auth.getStoredToken);
 
   while (true) {
-    let task;
     if (!storedToken) {
-      yield take(actions.login);
-      task = yield fork(authorize);
+      const { payload } = yield take(actions.login);
+      storedToken = yield call(login, payload);
     }
 
-    const { signOutAction } = yield race({
+    const refreshTokenTask = yield fork(refreshTokenOnExpiry, storedToken);
+
+    const { signOutAction, refreshTokenLoop } = yield race({
       signOutAction: take(actions.logout),
-      authLoop: call(authorizeLoop, storedToken),
+      refreshTokenLoop: join(refreshTokenTask),
     });
 
     if (signOutAction) {
-      yield cancel(task);
       yield call(signOut);
+      yield cancel(refreshTokenLoop);
     }
   }
 }
 
-export function* onWatch() {
-  yield takeLatest(actions.watchAuth.type, watchAuth);
-}
-
 export function* loginSaga() {
-  yield all([call(onWatch)]);
+  yield takeLatest(actions.watchAuth.type, watchAuth);
 }
