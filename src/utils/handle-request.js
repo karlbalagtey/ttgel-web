@@ -1,15 +1,14 @@
-export default function* handleRequest(
+export const prepareOptions = (
   method,
-  url,
-  params = null,
-  body = null,
-  avoidHeader,
-) {
-  const props = {
-    method,
-    url,
+  { data, params, successMessage, headers },
+) => {
+  return {
+    requestOptions: {
+      method: method || 'GET',
+      headers: headers,
+      data,
+    },
     params,
-    body,
-    avoidHeader,
+    successMessage,
   };
-}
+};

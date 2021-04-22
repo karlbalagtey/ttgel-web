@@ -1,17 +1,12 @@
 export const handleError = error => {
   const { response } = error;
 
-  if (response && response.payload && response.payload === 401) {
-    console.log(response.payload);
-    return false;
-  }
-
   if (response) {
-    return response.data.message;
+    return response.message;
   } else {
     const response = {
-      status: error.status,
-      message: error.message,
+      status: error.request.status,
+      message: error.request.message,
     };
     return response.message;
   }

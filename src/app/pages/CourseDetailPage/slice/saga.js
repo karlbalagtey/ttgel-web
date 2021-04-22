@@ -14,11 +14,10 @@ export function* fetchCourseDetails() {
     yield put(actions.success(data));
     yield put(actions.loadModules(modules));
   } catch (error) {
-    const errorMessage = handleError(error);
+    const errorMessage = yield call(handleError, error);
     if (errorMessage) {
       yield put(actions.error(errorMessage));
     }
-    yield put(loginActions.logout('Session ended'));
   }
 }
 
@@ -29,11 +28,10 @@ export function* fetchModule() {
     console.log(data);
     yield put(actions.loadPlayer(data));
   } catch (error) {
-    const errorMessage = handleError(error);
+    const errorMessage = yield call(handleError, error);
     if (errorMessage) {
       yield put(actions.error(errorMessage));
     }
-    yield put(loginActions.logout('Session ended'));
   }
 }
 

@@ -1,7 +1,6 @@
 import {
   take,
   call,
-  all,
   put,
   takeLatest,
   race,
@@ -18,7 +17,13 @@ import { handleError } from 'utils/handle-error';
 import { selectExpiresIn } from './selectors';
 import auth from './util';
 
-function* refreshTokenOnExpiry(token = null) {
+export function* refreshTokenOnExpiry() {
+  yield put(actions.refreshStart());
+  const { expires } = yield call(refreshToken);
+  yield put(actions.refreshSuccess(expires));
+}
+
+function* refreshTokenLoop(token = null) {
   while (true) {
     const createdAt = Math.round(Date.now().valueOf() / 1000);
     const expiresIn = yield select(selectExpiresIn);
@@ -30,13 +35,8 @@ function* refreshTokenOnExpiry(token = null) {
       return;
     }
 
-    console.log('refresh before delay');
-    console.log(tenSeconds);
     yield delay(tenSeconds);
-    console.log('after delay');
-    yield put(actions.refreshStart());
-    const { expires } = yield call(refreshToken);
-    yield put(actions.refreshSuccess(expires));
+    yield call(refreshTokenOnExpiry);
   }
 }
 
@@ -56,8 +56,11 @@ function* login({ email, password }) {
     );
     return data.token;
   } catch (error) {
-    const errorMessage = handleError(error);
-    yield put(actions.error(errorMessage));
+    const errorMessage = yield call(handleError, error);
+
+    if (errorMessage) {
+      yield put(actions.error(errorMessage));
+    }
   }
 }
 
@@ -70,16 +73,16 @@ export function* watchAuth() {
       storedToken = yield call(login, payload);
     }
 
-    const refreshTokenTask = yield fork(refreshTokenOnExpiry, storedToken);
+    const refreshTokenTask = yield fork(refreshTokenLoop, storedToken);
 
-    const { signOutAction, refreshTokenLoop } = yield race({
+    const { signOutAction, refreshTokenAction } = yield race({
       signOutAction: take(actions.logout),
-      refreshTokenLoop: join(refreshTokenTask),
+      refreshTokenAction: join(refreshTokenTask),
     });
 
     if (signOutAction) {
       yield call(signOut);
-      yield cancel(refreshTokenLoop);
+      yield cancel(refreshTokenAction);
     }
   }
 }
