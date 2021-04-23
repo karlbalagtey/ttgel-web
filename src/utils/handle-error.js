@@ -2,7 +2,7 @@ export const handleError = error => {
   const { response } = error;
 
   if (response) {
-    return response.message;
+    return response.data.message;
   } else {
     const response = {
       status: error.request.status,

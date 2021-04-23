@@ -18,13 +18,16 @@ const Wrapper = styled.section`
 `;
 
 const Title = styled.h1`
-  font-size: 75px;
-  font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 50px;
   text-shadow: -2px -3px ${p => p.theme.text};
   text-align: center;
   color: ${p => p.theme.background};
+
+  @media (min-width: 700px) {
+    font-size: 75px;
+    font-weight: 700;
+  }
 `;
 
 const BackgroundImage = styled.main`

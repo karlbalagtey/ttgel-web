@@ -75,9 +75,9 @@ const Button = styled(Link)`
   display: block;
   background-color: ${p => p.theme.background};
   text-decoration: none;
-  padding: 2rem;
-  margin: 1.5rem;
-  font-size: 1.4rem;
+  margin: 10px;
+  padding: 25px;
+  font-size: 20px;
   color: ${p => p.theme.text};
   box-shadow: 6px 7px 7px -6px #000;
   transition: all 0.4s;
@@ -87,9 +87,17 @@ const Button = styled(Link)`
     background-color: ${p => p.theme.textHighlight};
     color: ${p => p.theme.background};
   }
+
+  @media all and (min-width: 700px) {
+    margin: 20px;
+  }
 `;
 
 const GroupButton = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
+
+  @media all and (min-width: 700px) {
+    grid-template-columns: 1fr 1fr;
+  }
 `;

@@ -55,8 +55,15 @@ const slice = createSlice({
   },
 });
 
+/**
+ * `actions` will be used to trigger change in the state from where ever you want
+ */
 export const { actions: loginActions, reducer } = slice;
 
+/**
+ * Hook style usage.
+ * This will inject the slice to redux store and return actions in case you want to use in the component
+ */
 export const useLoginSlice = () => {
   useInjectReducer({ key: slice.name, reducer: slice.reducer });
   useInjectSaga({ key: slice.name, saga: loginSaga });

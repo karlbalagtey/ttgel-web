@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { selectCourses, selectId } from './slice/selectors';
 import { useProgrammeSlice } from './slice';
@@ -14,7 +14,7 @@ import {
   Course,
   CourseDetails,
   CourseNotes,
-} from './components/Course';
+} from 'app/components/Course';
 import { slugify } from '../../../utils/slugify';
 
 export function CourseList() {
@@ -23,8 +23,9 @@ export function CourseList() {
   const courses = useSelector(selectCourses);
   const defaultProgramme = useSelector(selectId);
   const { actions } = useProgrammeSlice();
+  const { search } = useParams();
 
-  const fetchCourses = React.useCallback(() => {
+  const fetchCourses = useCallback(() => {
     if (defaultProgramme && defaultProgramme.trim().length > 0) {
       dispatch(actions.fetchFeaturedProgramme());
     }
@@ -36,7 +37,7 @@ export function CourseList() {
     history.push(URL, { id: course.id });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchCourses();
   }, [history, fetchCourses]);
 

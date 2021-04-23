@@ -29,13 +29,13 @@ function* refreshTokenLoop(token = null) {
     const expiresIn = yield select(selectExpiresIn);
     const expInSec = expiresIn - createdAt;
     const expInMil = expInSec * 1000; // ms
-    const tenSeconds = expInMil - 50000; // for testing
+    // const tenSeconds = expInMil - 50000; // for testing
 
     if (!token) {
       return;
     }
 
-    yield delay(tenSeconds);
+    yield delay(expInMil);
     yield call(refreshTokenOnExpiry);
   }
 }

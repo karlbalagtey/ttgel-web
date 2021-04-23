@@ -17,7 +17,7 @@ export const PageBackground = styled.section`
   display: flex;
   align-items: center;
   background-color: ${p => p.theme.background};
-  height: ${props => props.height || 'auto'};
+  min-height: ${props => props.height || 'auto'};
   padding: ${props => props.padding || '0'};
 
   &.secondary {
