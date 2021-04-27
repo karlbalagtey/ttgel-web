@@ -25,6 +25,10 @@ export function Player({ player }) {
           <h3>{player.title}</h3>
           <p>{player.description}</p>
         </Description>
+        <audio controls>
+          <source src={player.audio} type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
       </ModulePlayer>
     </>
   );
