@@ -24,11 +24,11 @@ export function Player({ player }) {
         <Description>
           <h3>{player.title}</h3>
           <p>{player.description}</p>
+          <audio controls style={{ width: '100%', marginTop: 'auto' }}>
+            <source src={player.audio} type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
         </Description>
-        <audio controls>
-          <source src={player.audio} type="audio/mpeg" />
-          Your browser does not support the audio element.
-        </audio>
       </ModulePlayer>
     </>
   );
@@ -44,6 +44,9 @@ const Description = styled.div`
   flex-direction: column;
   padding: 1.5rem;
   color: ${p => p.theme.text};
+  width: 100%;
+  border: 1px solid ${p => p.theme.textHighlight};
+  border-left: 0;
 
   h3 {
     margin: 0;

@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-ttgelweb-dev-230810-authRole",
+      "UnauthRoleArn": "arn:aws:iam::499113384519:role/amplify-ttgelweb-dev-230810-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::499113384519:role/amplify-ttgelweb-dev-230810-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-ttgelweb-dev-230810-deployment",
+      "UnauthRoleName": "amplify-ttgelweb-dev-230810-unauthRole",
+      "StackName": "amplify-ttgelweb-dev-230810",
+      "StackId": "arn:aws:cloudformation:eu-west-2:499113384519:stack/amplify-ttgelweb-dev-230810/3ab017e0-a86e-11eb-b727-0a7effc730aa",
+      "AmplifyAppId": "d2tm4x810brfho"
+    },
+    "categories": {
+      "auth": {
+        "ttgelweb72946282": {}
+      }
+    }
+  }
+}
