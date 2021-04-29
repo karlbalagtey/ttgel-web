@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "ttgelweb",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authttgelweb72946282",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

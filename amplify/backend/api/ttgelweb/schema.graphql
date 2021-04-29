@@ -1,0 +1,71 @@
+type Programme
+  @model
+  @auth(
+    rules: [
+      { allow: groups, groups: ["Admin"], queries: null, mutations: [create, update, delete] }
+      { allow: groups, groups: ["Students"], queries: [get, list], mutations: null }
+    ]
+  ) {
+  id: ID!
+  title: String!
+  description: String
+  notes: String
+  image: String
+  courses: [Course] @connection(keyName: "byProgramme", fields: ["id"])
+}
+type Course
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["Admin"]
+        queries: null
+        mutations: [create, update, delete]
+      }
+      {
+        allow: groups
+        groups: ["Students"]
+        queries: [get, list]
+        mutations: null
+      }
+    ]
+  ) {
+  id: ID!
+  title: String!
+  description: String
+  notes: String
+  image: String
+  schedule: {
+    start: String
+    end: String
+  }
+}
+type Module
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["Admin"]
+        queries: null
+        mutations: [create, update, delete]
+      }
+      {
+        allow: groups
+        groups: ["Students"]
+        queries: [get, list]
+        mutations: null
+      }
+    ]
+  ) {
+  id: ID!
+  title: String!
+  description: String
+  notes: String
+  image: String
+  schedule: {
+    start: String
+    end: String
+  }
+}
