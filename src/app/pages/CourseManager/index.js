@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AppBar } from 'app/components/AppBar';
-import { AddForm } from './AddForm';
+import { CourseAddForm } from './CourseAddForm';
 
 import styled from 'styled-components/macro';
 
@@ -9,7 +9,7 @@ export function CourseManager() {
     <>
       <AppBar title="Course Manager" search={false} admin={true} />
       <Wrapper>
-        <AddForm />
+        <CourseAddForm />
       </Wrapper>
     </>
   );

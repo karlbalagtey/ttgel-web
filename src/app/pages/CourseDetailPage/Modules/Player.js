@@ -45,8 +45,7 @@ const Description = styled.div`
   padding: 1.5rem;
   color: ${p => p.theme.text};
   width: 100%;
-  border: 1px solid ${p => p.theme.textHighlight};
-  border-left: 0;
+  background: ${p => p.theme.backgroundVariant};
 
   h3 {
     margin: 0;
