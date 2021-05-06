@@ -13,7 +13,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/*.js?(x)'],
+      files: ['**/*.ts?(x)'],
       rules: { 'prettier/prettier': ['warn', prettierOptions] },
     },
   ],

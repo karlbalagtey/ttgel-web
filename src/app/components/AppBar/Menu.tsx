@@ -28,7 +28,7 @@ export function Menu() {
         handleClick={handleMenu}
         expanded={isOpen}
       />
-      <MenuWrap role="appmenu" className={isOpen && 'show'}>
+      <MenuWrap role="appmenu" className={isOpen ? 'show' : ''}>
         <MenuItem role="appmenuitem">
           <MenuLink to="/dashboard">Dashboard</MenuLink>
         </MenuItem>

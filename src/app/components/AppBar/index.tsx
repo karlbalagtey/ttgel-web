@@ -7,7 +7,14 @@ import { ReactComponent as ArrowBack } from './assets/arrow_back_white_24dp.svg'
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
-export function AppBar({ title, search = true, admin = false, keyword }) {
+interface AppBarProps {
+  title: string;
+  search: boolean;
+  admin: boolean;
+  keyword: string;
+}
+
+export const AppBar: React.FC<AppBarProps> = ({ title, search, admin, keyword }) => {
   const history = useHistory();
 
   return (
@@ -20,6 +27,11 @@ export function AppBar({ title, search = true, admin = false, keyword }) {
       <Menu />
     </Wrapper>
   );
+}
+
+AppBar.defaultProps = {
+  search: true,
+  admin: false,
 }
 
 const Wrapper = styled.nav`

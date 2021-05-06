@@ -3,11 +3,15 @@ import { useHistory } from 'react-router-dom';
 import { ReactComponent as SearchIcon } from '../assets/search_white_24dp.svg';
 import styled from 'styled-components';
 
-export function SearchBar({ className }) {
+interface SearchBarProps {
+  className: string
+}
+
+export const SearchBar: React.FC<SearchBarProps> = ({ className }) => {
   const history = useHistory();
   const [keyword, setKeyword] = useState('');
 
-  const handleSubmit = e => {
+  const handleSubmit = (e:any) => {
     e.preventDefault();
     console.log('submitted', keyword);
     history.push(`/dashboard/courses/search/${keyword}`);

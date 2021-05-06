@@ -1,6 +1,10 @@
 import styled from 'styled-components/macro';
 
-export function Button({ handleClick, children, ...props }) {
+interface ButtonProps {
+  handleClick: () => void,
+}
+
+export const Button: React.FC<ButtonProps> = ({ handleClick, children, ...props }) => {
   return (
     <ButtonWrap onClick={handleClick} {...props}>
       {children}

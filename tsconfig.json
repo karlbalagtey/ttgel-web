@@ -14,7 +14,6 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    // "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -23,7 +22,8 @@
     "noEmit": true,
     "noFallthroughCasesInSwitch": true,
     "jsx": "react-jsx",
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "strict": true
   },
   "include": [
     "src"
