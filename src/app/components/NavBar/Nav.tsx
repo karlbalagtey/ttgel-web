@@ -30,7 +30,7 @@ export function Nav() {
         expanded={isOpen}
       />
       {isAuth ? (
-        <MenuWrap className={isOpen && 'is-mobile'} role="menu">
+        <MenuWrap className={isOpen ? 'is-mobile' : ''} role="menu">
           <MenuItem role="menuitem">
             <ThemeSwitch />
           </MenuItem>
@@ -39,7 +39,7 @@ export function Nav() {
           </MenuItem>
         </MenuWrap>
       ) : (
-        <MenuWrap className={isOpen && 'is-mobile'} role="menu">
+        <MenuWrap className={isOpen ? 'is-mobile' : ''} role="menu">
           <MenuItem role="menuitem">
             <Item href="#course-overview" title="Course Overview">
               Course Overview

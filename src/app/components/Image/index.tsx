@@ -1,7 +1,20 @@
 import { useState } from 'react';
 import ContentLoader from 'react-content-loader';
 
-export function Image({ src, alt, width, height, ...props }) {
+interface ImageProps {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+}
+
+export const Image: React.FC<ImageProps> = ({
+  src,
+  alt,
+  width,
+  height,
+  ...props
+}) => {
   const [loaded, setLoaded] = useState(false);
 
   const handleImage = () => {

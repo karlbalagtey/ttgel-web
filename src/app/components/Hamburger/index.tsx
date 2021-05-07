@@ -5,7 +5,17 @@ import { ReactComponent as DarkMenuIcon } from './assets/menu_black_24dp.svg';
 import { ReactComponent as WhiteMenuIcon } from './assets/menu_white_24dp.svg';
 import { selectThemeKey } from 'styles/theme/slice/selectors';
 
-export function Hamburger({ handleClick, className, expanded }) {
+interface HamburgerProps {
+  handleClick: () => void;
+  className: string;
+  expanded: boolean;
+}
+
+export const Hamburger: React.FC<HamburgerProps> = ({
+  handleClick,
+  className,
+  expanded,
+}) => {
   const [selected, setSelected] = React.useState('light');
   const theme = useSelector(selectThemeKey);
 

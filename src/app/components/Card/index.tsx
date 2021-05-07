@@ -1,12 +1,18 @@
 import styled from 'styled-components/macro';
 import { Image } from './Image';
 
-export const Card = ({ props }) => {
+interface CardProps {
+  image: string;
+  title: string;
+  description: string;
+}
+
+export const Card: React.FC<CardProps> = ({ image, title, description }) => {
   return (
     <Wrapper>
-      <Image src={props.image} alt={props.title} />
-      <Title>{props.title}</Title>
-      <Content>{props.description}</Content>
+      <Image src={image} alt={title} />
+      <Title>{title}</Title>
+      <Content>{description}</Content>
     </Wrapper>
   );
 };

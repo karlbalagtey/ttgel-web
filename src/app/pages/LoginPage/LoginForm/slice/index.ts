@@ -1,8 +1,10 @@
+import { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { loginSaga } from './saga';
+import { LoginFormState } from './types';
 
-export const initialState = {
+export const initialState: LoginFormState = {
   user: null,
   loading: false,
   error: null,
@@ -15,7 +17,7 @@ const slice = createSlice({
   name: 'login',
   initialState,
   reducers: {
-    login(state, action) {
+    login(state, action: PayloadAction<string>) {
       state.user = action.payload;
       state.loading = true;
     },
@@ -48,7 +50,7 @@ const slice = createSlice({
     refreshStart(state) {
       state.isRefreshing = true;
     },
-    refreshSuccess(state, action) {
+    refreshSuccess(state, action: PayloadAction<number>) {
       state.isRefreshing = false;
       state.expiresIn = action.payload;
     },
