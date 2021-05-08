@@ -25,7 +25,7 @@ export function PopupMenu() {
         </Link>
       </MenuItem>
       <MenuItem>
-        <button onClick={() => dispatch(actions.logout())} title="Login">
+        <button onClick={() => dispatch(actions.logout(''))} title="Login">
           {theme === 'light' ? <LogoutIconBlack /> : <LogoutIconWhite />}{' '}
           <p>Logout</p>
         </button>
