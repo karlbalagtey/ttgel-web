@@ -19,13 +19,13 @@ export function SnackBar() {
   let timer;
   const handleTimeout = () => {
     timer = setTimeout(() => {
-      dispatch(actions.close());
+      dispatch(actions.close(''));
     }, timeout);
   };
 
   const handleClose = () => {
     clearTimeout(timer);
-    dispatch(actions.close());
+    dispatch(actions.close(''));
   };
 
   React.useEffect(() => {

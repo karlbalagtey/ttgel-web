@@ -13,7 +13,12 @@ export const PageWrapper = styled.section`
   }
 `;
 
-export const PageBackground = styled.section`
+interface PageBackgroundProps {
+  height: number;
+  padding: number;
+}
+
+export const PageBackground = styled.section<PageBackgroundProps>`
   display: flex;
   align-items: center;
   background-color: ${p => p.theme.background};

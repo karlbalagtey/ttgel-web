@@ -10,7 +10,11 @@ import { ReactComponent as AccountIconWhite } from '../assets/account_circle_whi
 
 import { StyleConstants } from 'styles/StyleConstants';
 
-export function UserAvatar({ isMobile }) {
+interface UserAvatarProps {
+  isMobile: boolean;
+}
+
+export const UserAvatar: React.FC<UserAvatarProps> = ({ isMobile }) => {
   const [open, setOpen] = useState(false);
   const user = useSelector(selectUser);
   const theme = useSelector(selectThemeKey);

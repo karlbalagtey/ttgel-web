@@ -6,14 +6,14 @@ import { selectThemeKey } from 'styles/theme/slice/selectors';
 
 import { ReactComponent as DarkModeIcon } from '../assets/dark_mode_black_24dp.svg';
 import { ReactComponent as LightModeIcon } from '../assets/light_mode_white_24dp.svg';
-import { ButtonWrap } from './styles';
+import { Button } from './Button';
 
 export function ThemeSwitch() {
   const [selected, setSelected] = React.useState('light');
   const dispatch = useDispatch();
   const theme = useSelector(selectThemeKey);
 
-  const handleThemeChange = (value: <string>) => {
+  const handleThemeChange = (value: string) => {
     setSelected(value);
     saveTheme(value);
     dispatch(themeActions.changeTheme(value));
@@ -26,25 +26,17 @@ export function ThemeSwitch() {
   return (
     <>
       {selected === 'light' ? (
-        <ButtonWrap
-          value="dark"
-          onClick={handleThemeChange('dark')}
-          title="Dark mode"
-        >
+        <Button onClick={() => handleThemeChange('dark')} title="Dark mode">
           <DarkModeIcon />
           <span className="sr-only">Dark</span>
           <p>Dark mode</p>
-        </ButtonWrap>
+        </Button>
       ) : (
-        <ButtonWrap
-          value="light"
-          onClick={handleThemeChange('light')}
-          title="Light mode"
-        >
+        <Button onClick={() => handleThemeChange('light')} title="Light mode">
           <LightModeIcon />
           <span className="sr-only">Light</span>
           <p>Light mode</p>
-        </ButtonWrap>
+        </Button>
       )}
     </>
   );
