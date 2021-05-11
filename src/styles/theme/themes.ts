@@ -15,6 +15,12 @@ const lightTheme = {
     lg: 1440,
     xlg: 1920,
   },
+  colors: {
+    failure: 'red',
+    success: 'green',
+    warning: 'orange',
+    secondary: 'grey',
+  },
 };
 
 const darkTheme = {
@@ -33,6 +39,12 @@ const darkTheme = {
     md: 1024,
     lg: 1440,
     xlg: 1920,
+  },
+  colors: {
+    failure: 'red',
+    success: 'green',
+    warning: 'orange',
+    secondary: 'grey',
   },
 };
 

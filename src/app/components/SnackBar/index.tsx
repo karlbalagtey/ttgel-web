@@ -16,7 +16,8 @@ export function SnackBar() {
 
   let snackbarPosition;
   let time = (timeout - 500) / 1000 + 's';
-  let timer;
+  let timer: ReturnType<typeof setTimeout> | {};
+
   const handleTimeout = () => {
     timer = setTimeout(() => {
       dispatch(actions.close(''));

@@ -1,13 +1,16 @@
-import { Toast } from '@defiplants/uikit'
+import { Toast } from 'app/widgets/Toast';
 
-type ToastSignature = (title: Toast['title'], description?: Toast['description']) => void
+type ToastSignature = (
+  title: Toast['title'],
+  description?: Toast['description'],
+) => void;
 
 export interface ToastContextApi {
-  toasts: Toast[]
-  clear: () => void
-  remove: (id: string) => void
-  toastError: ToastSignature
-  toastInfo: ToastSignature
-  toastSuccess: ToastSignature
-  toastWarning: ToastSignature
+  toasts: Toast[];
+  clear: () => void;
+  remove: (id: string) => void;
+  toastError: ToastSignature;
+  toastInfo: ToastSignature;
+  toastSuccess: ToastSignature;
+  toastWarning: ToastSignature;
 }
