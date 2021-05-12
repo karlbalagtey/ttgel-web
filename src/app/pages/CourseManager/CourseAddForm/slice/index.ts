@@ -6,6 +6,7 @@ export const initialState = {
   success: null,
   error: null,
   addedCourse: '',
+  image: '',
 };
 
 const slice = createSlice({
@@ -15,6 +16,9 @@ const slice = createSlice({
     addCourse(state, action) {
       state.loading = true;
       state.addedCourse = action.payload;
+    },
+    uploadImage(state, action) {
+      state.image = action.payload;
     },
     success(state, action) {
       state.loading = false;

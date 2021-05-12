@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components/macro';
 
+import { Wrapper, CourseAddFormWrap, ImageUploadWrap } from './styles';
 import { Input } from 'app/components/Input';
 import { Textarea } from 'app/components/Textarea';
 import { Title } from './components/Title';
@@ -9,7 +9,6 @@ import { Title } from './components/Title';
 import { useCourseSlice } from './slice';
 import { Form } from './components/Form';
 import { SubmitButton } from './components/Buttons';
-import { PreviewWrap } from './Preview';
 
 export function CourseAddForm() {
   const dispatch = useDispatch();
@@ -22,11 +21,17 @@ export function CourseAddForm() {
   });
 
   const [image, setImage] = useState({ preview: '', raw: '' });
-  const [notes, setNotes] = useState({ raw: '' });
+  const [notes, setNotes] = useState({ preview: '', raw: '' });
 
   const handleSubmit = e => {
     e.preventDefault();
+    console.log(course);
     dispatch(actions.addCourse(course));
+  };
+
+  const handleUpload = () => {
+    console.log(image.raw);
+    dispatch(actions.uploadFiles(image.raw));
   };
 
   const handleImage = e => {
@@ -40,7 +45,10 @@ export function CourseAddForm() {
 
   const handleNotes = e => {
     if (e.target.files.length) {
-      setNotes({ raw: e.target.files[0] });
+      setNotes({
+        preview: URL.createObjectURL(e.target.files[0]),
+        raw: e.target.files[0],
+      });
     }
   };
 
@@ -73,13 +81,30 @@ export function CourseAddForm() {
             value={description}
             required
           />
+          <SubmitButton type="submit" className="primary">
+            Submit
+          </SubmitButton>
+        </Form>
+      </CourseAddFormWrap>
+      <CourseAddFormWrap>
+        <Form onSubmit={handleUpload}>
           <ImageUploadWrap>
+            {image.preview && (
+              <img
+                src={image.preview}
+                alt="Preview"
+                width="250"
+                height="250"
+                style={{ marginBottom: '1.5rem' }}
+              />
+            )}
             <Input
               type="file"
               label="Image"
               name="image"
               labelFor="image"
               onChange={handleImage}
+              required
             />
           </ImageUploadWrap>
           <Input
@@ -91,28 +116,10 @@ export function CourseAddForm() {
           />
 
           <SubmitButton type="submit" className="primary">
-            Submit
+            Upload
           </SubmitButton>
         </Form>
       </CourseAddFormWrap>
-      <PreviewWrap title={title} description={description} image={image} />
     </Wrapper>
   );
 }
-
-const Wrapper = styled.section`
-  display: flex;
-`;
-
-const CourseAddFormWrap = styled.section`
-  display: flex;
-  padding: 1.5rem;
-  flex-direction: column;
-  width: 50%;
-  height: 100%;
-  background-color: ${p => p.theme.backgroundVariant};
-`;
-
-const ImageUploadWrap = styled.div`
-  background-color: ${p => p.theme.backgroundVariant};
-`;

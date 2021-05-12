@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-export function PreviewWrap({ title, description, image, step }) {
+export function PreviewWrap({ title, description, image, notes }) {
   return (
     <Preview>
       <h3>{title}</h3>
@@ -15,6 +15,7 @@ export function PreviewWrap({ title, description, image, step }) {
           style={{ marginBottom: '1.5rem' }}
         />
       )}
+      <p>{notes.preview}</p>
     </Preview>
   );
 }

@@ -1,8 +1,8 @@
 import { select, all, takeLatest, put, call } from 'redux-saga/effects';
 import { courseActions as actions } from '.';
 import { handleError } from 'utils/handle-error';
-import { selectAddedCourse } from './selectors';
-import { addBasicCourse } from './api';
+import { selectAddedCourse, selectImage } from './selectors';
+import { addBasicCourse, addCourseImage } from './api';
 import { snackbarActions } from 'app/components/SnackBar/slice';
 
 export function* addCourse() {
@@ -12,9 +12,36 @@ export function* addCourse() {
     yield put(actions.success(data));
     yield put(
       snackbarActions.notify({
+        message: `Successfully added ${data.title}`,
+        type: 'success',
+        position: 'bottom-right',
+      }),
+    );
+  } catch (error) {
+    const errorMessage = handleError(error);
+    yield put(actions.error(errorMessage));
+    yield put(
+      snackbarActions.notify({
+        message: errorMessage,
+        type: 'error',
+        position: 'top-center',
+      }),
+    );
+  }
+}
+
+export function* uploadImage() {
+  try {
+    const image = yield select(selectImage);
+    console.log(image);
+    const { data } = yield call(addCourseImage, image);
+    console.log(data);
+    yield put(actions.success(data));
+    yield put(
+      snackbarActions.notify({
         timeout: 5000,
-        message: 'Added course',
-        type: 'info',
+        message: 'Uploaded file',
+        type: 'success',
         autoClose: true,
         position: 'top-center',
       }),
