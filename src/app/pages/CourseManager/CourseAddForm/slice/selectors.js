@@ -8,3 +8,5 @@ export const selectAddedCourse = createSelector(
   [selectSlice],
   state => state.addedCourse,
 );
+
+export const selectImage = createSelector([selectSlice], state => state.image);
