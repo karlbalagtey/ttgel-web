@@ -18,6 +18,8 @@ const slice = createSlice({
       state.addedCourse = action.payload;
     },
     uploadImage(state, action) {
+      console.log(action.payload);
+      console.log(action);
       state.image = action.payload;
     },
     success(state, action) {

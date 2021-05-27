@@ -16,8 +16,6 @@ export function CourseAddForm() {
   const [course, setCourse] = useState({
     title: '',
     description: '',
-    image: '',
-    audio: '',
   });
 
   const [image, setImage] = useState({ preview: '', raw: '' });
@@ -25,13 +23,7 @@ export function CourseAddForm() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(course);
     dispatch(actions.addCourse(course));
-  };
-
-  const handleUpload = () => {
-    console.log(image.raw);
-    dispatch(actions.uploadFiles(image.raw));
   };
 
   const handleImage = e => {
@@ -40,6 +32,7 @@ export function CourseAddForm() {
         preview: URL.createObjectURL(e.target.files[0]),
         raw: e.target.files[0],
       });
+      dispatch(actions.uploadImage(e.target.files[0]));
     }
   };
 
@@ -87,7 +80,7 @@ export function CourseAddForm() {
         </Form>
       </CourseAddFormWrap>
       <CourseAddFormWrap>
-        <Form onSubmit={handleUpload}>
+        <Form>
           <ImageUploadWrap>
             {image.preview && (
               <img

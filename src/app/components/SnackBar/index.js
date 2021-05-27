@@ -81,6 +81,7 @@ const Wrapper = styled.div`
   align-items: center;
   position: fixed;
   z-index: 1000;
+  box-shadow: -1px 0px 6px 2px #00000075;
   ${props => (props.position.top ? 'top: 1rem' : 'bottom: 1rem')};
   ${props => (props.position.center ? 'left: 50%' : null)};
   ${props => (props.position.left ? 'left: 1rem' : 'right: 1rem')};

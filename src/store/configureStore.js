@@ -23,7 +23,14 @@ export function configureAppStore() {
   const persistedState = loadState();
   const store = configureStore({
     reducer: createReducer(),
-    middleware: [...getDefaultMiddleware(), ...middlewares],
+    middleware: [
+      ...getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: ['course/uploadImage'],
+        },
+      }),
+      ...middlewares,
+    ],
     preloadedState: persistedState,
     devTools:
       /* istanbul ignore next line */

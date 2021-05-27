@@ -47,6 +47,7 @@ export function* uploadImage() {
       }),
     );
   } catch (error) {
+    console.log(error);
     const errorMessage = handleError(error);
     yield put(actions.error(errorMessage));
   }
@@ -56,6 +57,10 @@ export function* onAddCourse() {
   yield takeLatest(actions.addCourse.type, addCourse);
 }
 
+export function* onUploadImage() {
+  yield takeLatest(actions.uploadImage.type, uploadImage);
+}
+
 export function* courseSaga() {
-  yield all([call(onAddCourse)]);
+  yield all([call(onAddCourse), call(onUploadImage)]);
 }

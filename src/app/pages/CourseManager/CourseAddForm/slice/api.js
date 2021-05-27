@@ -11,8 +11,7 @@ export const addCourseImage = async form => {
 
   console.log(form);
   const formData = new FormData();
-  formData.append('image', form.image.raw);
-  formData.append('notes', form.notes.raw);
+  formData.append('image', form);
 
   const config = {
     headers: {
